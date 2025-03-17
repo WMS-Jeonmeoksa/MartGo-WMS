@@ -10,7 +10,7 @@ public class StockDTO {
     Integer stock_num;
     Integer count;
     Integer total_price;
-    Integer admin_id;
+    String admin_id;
     String product_id;
     Integer incoming_num;
     String sector_id;
@@ -25,7 +25,7 @@ public class StockDTO {
         Integer stock_num;
         Integer count;
         Integer total_price;
-        Integer admin_id;
+        String admin_id;
         String product_id;
         Integer incoming_num;
         String sector_id;
@@ -43,7 +43,7 @@ public class StockDTO {
             this.total_price = total_price;
             return this;
         }
-        public StockDTOBuilder admin_id(Integer admin_id) {
+        public StockDTOBuilder admin_id(String admin_id) {
             this.admin_id = admin_id;
             return this;
         }
