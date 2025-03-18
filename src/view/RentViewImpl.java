@@ -8,9 +8,21 @@ public class RentViewImpl {
 
     public int displayMenu() {
         System.out.println("1. 임대신청");
+        System.out.println("2. 임대 신청 대기 목록");   // 관리자 메뉴에서만 보이도록 수정 예정
+        System.out.println("3. 임대 신청 진행중 목록");  // 총관리자만 사용할 수 있도록 수정 예정
         return sc.nextInt();
     }
 
+
+    public void displayHoldRentHistory() {
+        System.out.println("===========대기중인 임대 신청 목록=============");
+    }
+
+
+    public int selectRentHistory() {
+        System.out.println("임대 신청을 진행시킬 임대번호를 선택하세요");
+        return sc.nextInt();
+    }
 
     public int getWareHouseChoice() {
         System.out.println("창고 목록");
@@ -18,6 +30,7 @@ public class RentViewImpl {
         System.out.print("원하는 창고번호를 선택하세요: ");
         return sc.nextInt();
     }
+
     public String getSectorChoice(int wareHouse) {
         System.out.println("\n섹터 목록");
         System.out.println("1. A섹터 |  2. B섹터 |  3. C섹터 | 4. D섹터");
@@ -62,4 +75,6 @@ public class RentViewImpl {
     public void rentEnd() {
         System.out.println("임대 신청이 완료되었습니다.");
     }
+
+
 }
