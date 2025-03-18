@@ -1,16 +1,15 @@
 package controller;
 
-import model.dao.RentDao;
 import model.dao.RentDaoImpl;
 import model.service.RentService;
 import model.service.RentServiceImpl;
 import view.RentViewImpl;
 
-public class RentControllerImpl implements RentController{
+public class RentControllerImpl implements RentController {
 
     RentService rentService = new RentServiceImpl();
     RentViewImpl rentView = new RentViewImpl();
-    RentDao rentDao = new RentDaoImpl();
+    RentDaoImpl rentDao = new RentDaoImpl();
 
 
     public void handleRentRequest() {
@@ -31,6 +30,18 @@ public class RentControllerImpl implements RentController{
                     rentView.rentEnd();
                 }
             }
+        } else if (menu == 2) {
+            rentView.displayHoldRentHistory();
+            RentDaoImpl.getHoldRentHistory();
+            int selectRentNum = rentView.selectRentHistory();
+            int adminId = 123;   // 관리자 아이디 받아야됨
+            RentDaoImpl.updateAdminId(selectRentNum, adminId);
+        } else if (menu == 3) {
+            rentView.displayHoldRentHistory();
+            RentDaoImpl.getinProgressRentHistory();
+            int selectRentNum = rentView.selectRentHistory();
+            rentDao.completedRentStatus(selectRentNum);
+
         }
     }
 }
