@@ -112,7 +112,7 @@ public class Controller {
             break;
         }
 
-        // 비밀번호 입력 (한 번만 입력)
+        // 비밀번호 입력
         String password;
         while (true) {
             System.out.print("비밀번호 : ");

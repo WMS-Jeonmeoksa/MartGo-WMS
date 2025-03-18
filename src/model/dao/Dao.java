@@ -1,6 +1,6 @@
 package model.dao;
 
-import common.utils.Utils;
+import common.utils.DbUtil;
 import model.dto.AdminDto;
 import model.dto.UserDto;
 
@@ -15,7 +15,7 @@ public class Dao {
     public static int insertUser(UserDto user) throws SQLException {
         int result = 0;
         String sql = "{CALL InsertUser(?, ?, ?, ?, ?, ?, ?, ?)}";
-        try (Connection conn = Utils.getConnection();
+        try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             // 회원가입 시 입력받은 id를 user_id와 user_name에 사용합니다.
             pstmt.setString(1, user.getUserId());
@@ -38,7 +38,7 @@ public class Dao {
         UserDto user = null;
         // 컬럼 이름은 테이블 정의에 맞춰 user_pw 사용
         String sql = "SELECT * FROM User WHERE user_id = ? AND user_pw = ?";
-        try (Connection conn = Utils.getConnection();
+        try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             pstmt.setString(2, userPassword);
@@ -64,7 +64,7 @@ public class Dao {
     public AdminDto loginAdmin(String adminId, String adminPassword) {
         AdminDto admin = null;
         String sql = "SELECT * FROM Admin WHERE admin_id = ? AND admin_pw = ?";
-        try (Connection conn = Utils.getConnection();
+        try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, adminId);
             pstmt.setString(2, adminPassword);
