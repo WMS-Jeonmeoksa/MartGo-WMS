@@ -2,6 +2,7 @@ package model.dao;
 
 import common.utils.DbUtil;
 import model.dto.StockDTO;
+import model.dto.StockHistoryDTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,13 +18,13 @@ public class StockDAOImpl implements StockDAO {
 
     // 회원 아이디에 따른 재고 내역 확인 메서드
     @Override
-    public <T> Optional<List<StockDTO>> checkUserStock(Integer user_id) {
+    public List<StockDTO> checkUserStock(String user_id) {
         List<StockDTO> checkStockList = new ArrayList<>();
         ResultSet rs = null;
         try {
             conn = DbUtil.getConnection();
             pstmt = conn.prepareStatement("SELECT * FROM stock WHERE user_id = ?");
-            pstmt.setInt(1, user_id);
+            pstmt.setString(1, user_id);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -31,18 +32,17 @@ public class StockDAOImpl implements StockDAO {
                         .stock_num(rs.getInt("stock_num"))
                         .count(rs.getInt("count"))
                         .total_price(rs.getInt("total_price"))
+                        .user_id(rs.getString("user_id"))
                         .product_id(rs.getString("product_id"))
-                        .incoming_num(rs.getInt("Incoming_num"))
                         .sector_id(rs.getString("sector_id"))
                         .warehouse_id(rs.getInt("warehouse_id"))
                         .build();
                 checkStockList.add(stock);
             }
-            return Optional.of(checkStockList);
+            return checkStockList;
 
         } catch (Exception e) {
             e.printStackTrace();
-            return Optional.empty();
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -52,5 +52,83 @@ public class StockDAOImpl implements StockDAO {
                 e.printStackTrace();
             }
         }
+        return checkStockList;
+    }
+
+    @Override
+    public List<StockDTO> checkAllStock(String admin_id) {
+        List<StockDTO> checkStockList = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            conn = DbUtil.getConnection();
+            pstmt = conn.prepareStatement("SELECT * FROM stock");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StockDTO stock = StockDTO.builder()
+                        .stock_num(rs.getInt("stock_num"))
+                        .count(rs.getInt("count"))
+                        .total_price(rs.getInt("total_price"))
+                        .user_id(rs.getString("user_id"))
+                        .product_id(rs.getString("product_id"))
+                        .sector_id(rs.getString("sector_id"))
+                        .warehouse_id(rs.getInt("warehouse_id"))
+                        .build();
+                checkStockList.add(stock);
+            }
+            return checkStockList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return checkStockList;
+    }
+
+    @Override
+    public List<StockHistoryDTO> checkStockHistoryList() {
+        List<StockHistoryDTO> checkStockList = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            conn = DbUtil.getConnection();
+            pstmt = conn.prepareStatement("SELECT * FROM stock_history");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StockHistoryDTO stockHistory = new StockHistoryDTO.StockHistoryDTOBuilder()
+                        .history_num(rs.getInt("history_num"))
+                        .product_id(rs.getString("product_id"))
+                        .sector_id(rs.getString("sector_id"))
+                        .count(rs.getInt("count"))
+                        .change_date(rs.getDate("change_date"))
+                        .change_type(rs.getString("change_type"))
+                        .admin_id(rs.getString("admin_id"))
+                        .incoming_num(rs.getInt("incoming_num"))
+                        .outgoing_num(rs.getInt("outgoing_num"))
+                        .stock_num(rs.getInt("stock_num"))
+                        .build();
+                checkStockList.add(stockHistory);
+            }
+            return checkStockList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return checkStockList;
     }
 }
