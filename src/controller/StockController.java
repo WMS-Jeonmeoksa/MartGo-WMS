@@ -14,18 +14,29 @@ public class StockController {
 
 
         // 여기에 입고 완료 되었을 때 입고번호를 넘겨 받음
-        int incoming_num = 2;
-        if (stockService.checkIncomingStock(incoming_num)) {
+        int incoming_num = 3;
+        if (stockService.isIncomingStockUpdated(incoming_num)) {
             System.out.println("재고 업데이트가 성공적으로 완료되었습니다.");
         } else {
             System.out.println("재고 업데이트에 실패하였습니다.");
         }
-        if (stockService.checkIncomingStockHistory(incoming_num)) {
+        if (stockService.isIncomingStockHistoryUpdated(incoming_num)) {
             System.out.println("재고 이력 업데이트가 성공적으로 완료되었습니다.");
         } else{
             System.out.println("재고 이력 업데이트에 실패하였습니다.");
         }
 
+        int outgoing_num = 1;
+        if (stockService.isOutgoingStockUpdated(outgoing_num)){
+            System.out.println("재고 이력 업데이트가 성공적으로 완료되었습니다.");
+        } else{
+            System.out.println("재고 이력 업데이트에 실패하였습니다.");
+        }
+        if (stockService.isOutgoingStockHistoryUpdated(outgoing_num)){
+            System.out.println("재고 이력 업데이트가 성공적으로 완료되었습니다.");
+        } else {
+            System.out.println("재고 이력 업데이트에 실패하였습니다.");
+        }
         
         // 입고 완료 되었을 때 해당 회원 id 를 넘겨받음
         int user_id = 1;
