@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-public class Dao {
+public class IoginsignupDao {
 
     // 회원가입
     public static int insertUser(UserDto user) throws SQLException {

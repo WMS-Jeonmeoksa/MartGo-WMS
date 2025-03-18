@@ -1,38 +1,14 @@
 package controller;
 
-import java.io.Console;
-import java.io.IOException;
 import java.util.Scanner;
 import model.dto.UserDto;
 import model.dto.AdminDto;
-import model.service.Service;
+import model.service.IoginsignupService;
 
-public class Controller {
-    private Service service = new Service();
+public class IoginsignupController {
+    private IoginsignupService service = new IoginsignupService();
     private Scanner scan = new Scanner(System.in);
 
-    // 회원가입: 필수 항목이 빈 값이면 계속 재입력을 요구함.
-    public boolean signUpUser(String id, String username, String userPassword, String phone,
-                              String email, String address) {
-        UserDto user = new UserDto();
-        user.setUserId(id);
-        user.setUserName(username);
-        user.setUserPassword(userPassword);
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setAddress(address);
-        return service.signUpUser(user);
-    }
-
-    // 회원 로그인
-    public UserDto loginUser(String userid, String userPassword) {
-        return service.loginUser(userid, userPassword);
-    }
-
-    // 관리자 로그인
-    public AdminDto loginAdmin(String adminId, String adminPassword) {
-        return service.loginAdmin(adminId, adminPassword);
-    }
 
     // 메인 메뉴
     public void start() {
@@ -69,22 +45,32 @@ public class Controller {
 
 
         // 먼저 회원 테이블에서 로그인 시도
-        UserDto user = loginUser(id, password);
-        if (user != null) {
+        UserDto user = service.loginUser(id, password);
+        AdminDto admin = service.loginAdmin(id, password);
+
+        if(user == null && admin == null) {
+            System.out.println("로그인 실패 : 존재하지 않는 계정입니다.");
+            return;
+        }
+
+
+        if (user.getRole().equals("회원")) {
             System.out.println("\n회원 로그인 성공! " + user.getUserName() + "님 환영합니다.");
             memberMenu(user);
+        } else if(user.getRole().equals("거래처")){
+            System.out.println("\n회원(거래처) 로그인 성공! " + user.getUserName() + "님 환영합니다.");
+            memberCustomerMenu(user);
+        } else if(admin.getRole().equals("창고관리자")) { // 회원 정보가 없으면 관리자 테이블에서 로그인 시도
+            System.out.println("\n관지라(창고관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
+            WarehouseadminMenu(admin);
+        } else if(admin.getRole().equals("총관리자")) {
+            System.out.println("\n관지라(총관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
+            SuperadminMenu(admin);
         } else {
-            // 회원 정보가 없으면 관리자 테이블에서 로그인 시도
-            AdminDto admin = loginAdmin(id, password);
-            if (admin != null) {
-                System.out.println("\n관리자 로그인 성공! " + admin.getAdminName()
-                        + " (" + admin.getRole() + ")");
-                adminMenu(admin);
-            } else {
                 System.out.println("\n로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
-            }
         }
     }
+
 
     // 회원가입 처리: 필수 입력값을 올바르게 받을 때까지 반복
     private void signUp() {
@@ -163,7 +149,15 @@ public class Controller {
             break;
         }
 
-        boolean result = signUpUser(id, name, password, phone, email, address);
+        UserDto user = new UserDto();
+        user.setUserId(id);
+        user.setUserName(name);
+        user.setUserPassword(password);
+        user.setPhone(phone);
+        user.setEmail(email);
+        user.setAddress(address);
+
+        boolean result = service.signUpUser(user);
         if (result) {
             System.out.println("회원가입 성공!");
         } else {
@@ -178,7 +172,8 @@ public class Controller {
         while (loggedIn) {
             System.out.println("\n===== 회원 메뉴 =====");
             System.out.println("1. 내 정보 보기");
-            System.out.println("2. 로그아웃");
+            System.out.println("2. 입고신청");
+            System.out.println("3. 로그아웃");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
             switch (choice) {
@@ -189,9 +184,47 @@ public class Controller {
                     System.out.println("전화번호: " + user.getPhone());
                     System.out.println("이메일: " + user.getEmail());
                     System.out.println("주소: " + user.getAddress());
-                    System.out.println("역할: " + user.getRole());
+                    System.out.println("권한: " + user.getRole());
                     break;
-                case 2:
+
+
+
+                case 3:
+                    System.out.println("로그아웃 되었습니다.");
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다.");
+            }
+        }
+    }
+
+    //회원의 거래처인 전용 메뉴
+    private void memberCustomerMenu(UserDto user) {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n===== 거래처 메뉴 =====");
+            System.out.println("1. 내 정보 보기");
+            System.out.println("2. 입고");
+            System.out.println("3. 출고");
+            System.out.println("4. 재고 조회");
+            System.out.println("5. 로그아웃");
+            System.out.print("선택 > ");
+            int choice = Integer.parseInt(scan.nextLine());
+            switch (choice) {
+                case 1:
+                    System.out.println("\n=== 내 정보 ===");
+                    System.out.println("아이디: " + user.getUserId());
+                    System.out.println("이름: " + user.getUserName());
+                    System.out.println("전화번호: " + user.getPhone());
+                    System.out.println("이메일: " + user.getEmail());
+                    System.out.println("주소: " + user.getAddress());
+                    System.out.println("권한: " + user.getRole());
+                    break;
+
+
+
+                case 5:
                     System.out.println("로그아웃 되었습니다.");
                     loggedIn = false;
                     break;
@@ -202,10 +235,10 @@ public class Controller {
     }
 
     // 로그인 후 관리자 전용 메뉴
-    private void adminMenu(AdminDto admin) {
+    private void WarehouseadminMenu(AdminDto admin) {
         boolean loggedIn = true;
         while (loggedIn) {
-            System.out.println("\n===== 관리자 메뉴 =====");
+            System.out.println("\n===== 창고관리자 메뉴 =====");
             System.out.println("1. 관리자 정보 보기");
             System.out.println("2. 로그아웃");
             System.out.print("선택 > ");
@@ -217,7 +250,34 @@ public class Controller {
                     System.out.println("이름: " + admin.getAdminName());
                     System.out.println("전화번호: " + admin.getPhone());
                     System.out.println("이메일: " + admin.getEmail());
-                    System.out.println("역할: " + admin.getRole());
+                    System.out.println("권한: " + admin.getRole());
+                    break;
+                case 2:
+                    System.out.println("로그아웃 되었습니다.");
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("잘못된 선택입니다.");
+            }
+        }
+    }
+
+    private void SuperadminMenu(AdminDto admin) {
+        boolean loggedIn = true;
+        while (loggedIn) {
+            System.out.println("\n===== 총관리자 메뉴 =====");
+            System.out.println("1. 관리자 정보 보기");
+            System.out.println("2. 로그아웃");
+            System.out.print("선택 > ");
+            int choice = Integer.parseInt(scan.nextLine());
+            switch (choice) {
+                case 1:
+                    System.out.println("\n=== 관리자 정보 ===");
+                    System.out.println("아이디: " + admin.getAdminId());
+                    System.out.println("이름: " + admin.getAdminName());
+                    System.out.println("전화번호: " + admin.getPhone());
+                    System.out.println("이메일: " + admin.getEmail());
+                    System.out.println("권한: " + admin.getRole());
                     break;
                 case 2:
                     System.out.println("로그아웃 되었습니다.");
@@ -230,7 +290,7 @@ public class Controller {
     }
 
     public static void main(String[] args) {
-        Controller controller = new Controller();
+        IoginsignupController controller = new IoginsignupController();
         controller.start();
     }
 }
