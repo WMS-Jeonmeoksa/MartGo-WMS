@@ -2,6 +2,7 @@ package model.dao;
 
 import common.utils.DbUtil;
 import model.dto.StockDTO;
+import model.dto.StockHistoryDTO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,6 +75,46 @@ public class StockDAOImpl implements StockDAO {
                         .warehouse_id(rs.getInt("warehouse_id"))
                         .build();
                 checkStockList.add(stock);
+            }
+            return checkStockList;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return checkStockList;
+    }
+
+    @Override
+    public List<StockHistoryDTO> checkStockHistoryList() {
+        List<StockHistoryDTO> checkStockList = new ArrayList<>();
+        ResultSet rs = null;
+        try {
+            conn = DbUtil.getConnection();
+            pstmt = conn.prepareStatement("SELECT * FROM stock_history");
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                StockHistoryDTO stockHistory = new StockHistoryDTO.StockHistoryDTOBuilder()
+                        .history_num(rs.getInt("history_num"))
+                        .product_id(rs.getString("product_id"))
+                        .sector_id(rs.getString("sector_id"))
+                        .count(rs.getInt("count"))
+                        .change_date(rs.getDate("change_date"))
+                        .change_type(rs.getString("change_type"))
+                        .admin_id(rs.getString("admin_id"))
+                        .incoming_num(rs.getInt("incoming_num"))
+                        .outgoing_num(rs.getInt("outgoing_num"))
+                        .stock_num(rs.getInt("stock_num"))
+                        .build();
+                checkStockList.add(stockHistory);
             }
             return checkStockList;
 
