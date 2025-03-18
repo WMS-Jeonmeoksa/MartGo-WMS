@@ -131,7 +131,7 @@ public class RentDaoImpl implements RentDao {
         try (CallableStatement stmt = DbUtil.getConnection().prepareCall(sql)) {
             stmt.setInt(1, rentNum);
             stmt.executeUpdate();
-            System.out.println("임대 번호 " + rentNum + "의 상태가 '승인완료'로 변경되었습니다.");
+            System.out.println("임대 번호 " + rentNum + "의 상태가 '완료'로 변경되었습니다.");
         } catch (SQLException e) {
             throw new RuntimeException("임대 상태 업데이트 중 오류 발생: " + e.getMessage(), e);
         }
