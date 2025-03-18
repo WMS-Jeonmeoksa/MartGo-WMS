@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface StockDAO {
     List<StockDTO> checkUserStock(String user_id);
+    List<StockDTO> checkAllStock(String admin_id);
 }

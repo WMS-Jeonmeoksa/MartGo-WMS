@@ -3,7 +3,6 @@ package model.service;
 import model.dao.StockDAO;
 import model.dao.StockDAOImpl;
 import model.dto.StockDTO;
-import java.util.ArrayList;
 
 
 import java.util.List;
@@ -12,6 +11,13 @@ public class StockServiceImpl implements StockService {
     private StockDAO stockDAO = new StockDAOImpl();
 
     public List<StockDTO> getUserStock(String user_id) {
-        return stockDAO.checkUserStock(user_id);
+        List<StockDTO> resultUserStock = stockDAO.checkUserStock(user_id);
+        return resultUserStock;
+    }
+
+    @Override
+    public List<StockDTO> getAllStock(String admin_id) {
+        List<StockDTO> resultAllStock = stockDAO.checkAllStock(admin_id);
+        return resultAllStock;
     }
 }
