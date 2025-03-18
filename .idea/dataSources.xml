@@ -13,6 +13,7 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="MartGo" uuid="ee1fddaf-475a-41b2-b67a-b10bfb49da05">
     <data-source source="LOCAL" name="martgo" uuid="9a594786-64aa-48bf-987b-9f860fc5df12">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
