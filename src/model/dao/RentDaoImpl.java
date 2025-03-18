@@ -126,7 +126,7 @@ public class RentDaoImpl implements RentDao {
     }
 
     public void completedRentStatus(int rentNum) {
-        String sql = "{CALL CompletedRentStatus(?)}"; // 프로시저 호출
+        String sql = "{CALL CompletedRentStatus(?)}";
 
         try (CallableStatement stmt = DbUtil.getConnection().prepareCall(sql)) {
             stmt.setInt(1, rentNum);
