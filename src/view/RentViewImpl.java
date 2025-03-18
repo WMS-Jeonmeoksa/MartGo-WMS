@@ -14,17 +14,6 @@ public class RentViewImpl {
         return sc.nextInt();
     }
 
-
-    public void displayHoldRentHistory() {
-        System.out.println("===========대기중인 임대 신청 목록=============");
-    }
-
-
-    public int selectRentHistory() {
-        System.out.println("임대 신청을 진행시킬 임대번호를 선택하세요");
-        return sc.nextInt();
-    }
-
     public int getWareHouseChoice() {
         System.out.println("창고 목록");
         System.out.println("1. 1번 창고  2. 2번 창고");
@@ -55,8 +44,6 @@ public class RentViewImpl {
     }
 
     public void displaySelection(RentHistoryDTO rentHistory, int month) {
-
-
         System.out.println("\n========선택 내역==========");
         System.out.println("창고 이름 : " + rentHistory.getWarehouseId() + "번 창고");
         System.out.println("섹터 이름 : " + rentHistory.getSectorId());
@@ -79,5 +66,13 @@ public class RentViewImpl {
         System.out.println("임대 신청이 완료되었습니다.");
     }
 
+    public void displayHoldRentHistory() {
+        System.out.println("===========대기중인 임대 신청 목록=============");
+    }
 
+
+    public int selectRentHistory() {
+        System.out.println("임대 신청을 진행시킬 임대번호를 선택하세요");
+        return sc.nextInt();
+    }
 }

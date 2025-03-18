@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 public class RentServiceImpl implements RentService {
     RentDao rentDao = new RentDaoImpl();
 
-
     public void saveRentHistory(RentHistoryDTO rentHistory, int month, String startDay) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDay, formatter);
@@ -26,6 +25,4 @@ public class RentServiceImpl implements RentService {
 
         rentDao.saveDb(rentHistory);
     }
-
-
 }

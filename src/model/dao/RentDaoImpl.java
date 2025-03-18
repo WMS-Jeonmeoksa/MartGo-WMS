@@ -75,6 +75,24 @@ public class RentDaoImpl implements RentDao {
         }
     }
 
+    public static void updateAdminId(int rentNum, int adminId) {
+        String sql = "{CALL UpdateAdminId(?, ?)}";
+
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);)
+        {
+            stmt.setInt(1, rentNum);
+            stmt.setInt(2, adminId);
+
+            stmt.executeUpdate();
+
+            System.out.println("Admin ID 업데이트 완료.");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static void getinProgressRentHistory() {
         String sql = "{CALL GetinProgressRentHistory()}";
@@ -97,31 +115,10 @@ public class RentDaoImpl implements RentDao {
                 System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
                         ", 창고: " + warehouseId + ", 회원ID: " + userId +
                         ", 임대 시작일: " + rentStartDate + ", 임대 종료일: " + rentEndDate +
-                        ", 임대료: " + rentPrice + ", 상태: " + status +", 창고관리자ID: " + adminId);
+                        ", 임대료: " + rentPrice + ", 상태: " + status + ", 창고관리자ID: " + adminId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-    public static void updateAdminId(int rentNum, int adminId) {
-        Connection conn = null;
-        CallableStatement stmt = null;
-
-        try {
-            conn = DbUtil.getConnection();
-
-            String sql = "{CALL UpdateAdminId(?, ?)}";
-            stmt = conn.prepareCall(sql);
-
-            stmt.setInt(1, rentNum);
-            stmt.setInt(2, adminId);
-
-            stmt.executeUpdate();
-
-            System.out.println("Admin ID 업데이트 완료.");
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
