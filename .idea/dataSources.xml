@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="74a21b42-7a12-4ee9-8389-a857a55a65de">
+    <data-source source="LOCAL" name="@localhost" uuid="b01785f2-4fe3-4796-8831-50f47406818f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
@@ -14,6 +14,7 @@
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="MartGo" uuid="ee1fddaf-475a-41b2-b67a-b10bfb49da05">
+    <data-source source="LOCAL" name="martgo" uuid="9a594786-64aa-48bf-987b-9f860fc5df12">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
