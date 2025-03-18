@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-feat/rent_history
-    <data-source source="LOCAL" name="@localhost" uuid="8f6c372d-0b6b-4af8-99e2-f9ee75b9fc53">
+    <data-source source="LOCAL" name="@localhost" uuid="b01785f2-4fe3-4796-8831-50f47406818f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
