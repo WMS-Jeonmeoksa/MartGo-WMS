@@ -9,7 +9,16 @@ public enum MessageEnum {
     INPUT_PRODUCT_WIDTH("너비를 입력하세요: "),
     INPUT_PRODUCT_PRICE("가격을 입력하세요: "),
     INPUT_PRODUCT_MANUFACTURER("제조사를 입력하세요: "),
-    PRODUCT_REGISTER_SUCCESS("제품이 성공적으로 등록되었습니다.");
+    PRODUCT_REGISTER_SUCCESS("제품이 성공적으로 등록되었습니다."),
+
+    INPUT_INCOMING_TITLE("\n====== 입고신청 ======"),
+    INPUT_INCOMING_PRODUCT_ID("입고할 제품 ID를 입력하세요."),
+    INPUT_INCOMING_COUNT("입고할 제품 수량을 입력하세요."),
+    INPUT_INCOMING_DATE("입고할 날짜를 입력하세요. (YYYY-MM-DD)"),
+    INCOMING_REQUEST_SUCCESS("입고요청이 성공적으로 완료되었습니다."),
+    NO_INCOMING_LIST("요청된 입고신청이 없습니다."),
+    INPUT_INCOMING_APPROVE("승인할 입고번호를 입력하세요."),
+    INCOMING_APPROVE_SUCCESS("입고요청을 성공적으로 승인하였습니다.");
 
     private final String message;
 
