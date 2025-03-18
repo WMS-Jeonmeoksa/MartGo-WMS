@@ -30,3 +30,8 @@ bin/
 
 # DB 설정 파일 제외
 src/main/resources/common/config/dbconfig.properties
+
+# IntelliJ 설정 파일 제외
+.idea/
+.idea/dataSources.xml
+*.imlgit
