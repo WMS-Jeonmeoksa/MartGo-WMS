@@ -1,6 +1,6 @@
 package model.dao;
 
-import common.DBUtil;
+import common.utils.DbUtil;
 import model.dto.RentHistoryDTO;
 
 import java.sql.CallableStatement;
@@ -14,7 +14,7 @@ public class RentDaoImpl implements RentDao {
         String query = "{CALL GetCostInfo(?, ?, ?)}";
         int rentPrice = -1;
 
-        try (Connection connection = DBUtil.getConnection();
+        try (Connection connection = DbUtil.getConnection();
              CallableStatement cstmt = connection.prepareCall(query)) {
 
             cstmt.setInt(1, wareHouse);
@@ -35,7 +35,7 @@ public class RentDaoImpl implements RentDao {
     public void saveDb(RentHistoryDTO rentHistory) {
         String insertQuery = "{CALL InsertRentHistory(?, ?, ?, ?, ?, ?)}";
 
-        try (Connection connection = DBUtil.getConnection();
+        try (Connection connection = DbUtil.getConnection();
              CallableStatement cstmt = connection.prepareCall(insertQuery)) {
 
             cstmt.setString(1, rentHistory.getSectorId());
