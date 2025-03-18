@@ -12,17 +12,16 @@ public class RentServiceImpl implements RentService {
     RentDao rentDao = new RentDaoImpl();
 
 
-    public void saveRentHistory(int wareHouse, String sectorName, int month, int rentPrice, String startDay) {
+    public void saveRentHistory(RentHistoryDTO rentHistory, int month, String startDay) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDay, formatter);
         LocalDate endDate = startDate.plusMonths(month);
 
-        RentHistoryDTO rentHistory = new RentHistoryDTO();
-        rentHistory.setSectorId(sectorName);
-        rentHistory.setWarehouseId(wareHouse);
+        rentHistory.setSectorId(rentHistory.getSectorId());
+        rentHistory.setWarehouseId(rentHistory.getWarehouseId());
         rentHistory.setRentStartDate(Date.valueOf(startDate));
         rentHistory.setRentEndDate(Date.valueOf(endDate));
-        rentHistory.setRentPrice(rentPrice);
+        rentHistory.setRentPrice(rentHistory.getRentPrice());
         rentHistory.setUserId(1);       // 회원 ID받아와서 넣어야함
 
         rentDao.saveDb(rentHistory);

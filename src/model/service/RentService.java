@@ -1,5 +1,7 @@
 package model.service;
 
+import model.dto.RentHistoryDTO;
+
 public interface RentService {
-    void saveRentHistory(int wareHouse, String sectorName, int month, int rentPrice, String startDay);
+    void saveRentHistory(RentHistoryDTO rentHistory, int month, String startDay);
 }

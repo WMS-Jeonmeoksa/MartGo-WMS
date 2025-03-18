@@ -1,15 +1,18 @@
 package controller;
 
 import model.dao.RentDaoImpl;
+import model.dto.RentHistoryDTO;
 import model.service.RentService;
 import model.service.RentServiceImpl;
 import view.RentViewImpl;
+
 
 public class RentControllerImpl implements RentController {
 
     RentService rentService = new RentServiceImpl();
     RentViewImpl rentView = new RentViewImpl();
     RentDaoImpl rentDao = new RentDaoImpl();
+    RentHistoryDTO rentHistory = new RentHistoryDTO();
 
 
     public void handleRentRequest() {
@@ -21,12 +24,18 @@ public class RentControllerImpl implements RentController {
             int month = rentView.getRentPeriod();
 
             int rentPrice = rentDao.getRentPrice(wareHouse, sectorName, month);
+
+            rentHistory.setSectorId(sectorName);
+            rentHistory.setWarehouseId(wareHouse);
+            rentHistory.setRentPrice(rentPrice);
+
             if (rentPrice != -1) {
-                rentView.displaySelection(wareHouse, sectorName, month, rentPrice);
+                rentView.displaySelection(rentHistory, month);
                 int select = rentView.confirmSelection();
                 if (select == 1) {
                     String startDay = rentView.getStartDate();
-                    rentService.saveRentHistory(wareHouse, sectorName, month, rentPrice, startDay);
+
+                    rentService.saveRentHistory(rentHistory, month, startDay);
                     rentView.rentEnd();
                 }
             }

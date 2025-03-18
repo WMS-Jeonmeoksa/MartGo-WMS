@@ -1,5 +1,6 @@
 package view;
 
+import model.dto.RentHistoryDTO;
 import java.util.Scanner;
 
 public class RentViewImpl {
@@ -53,12 +54,14 @@ public class RentViewImpl {
         return sc.nextInt();
     }
 
-    public void displaySelection(int wareHouse, String sectorName, int month, int rentPrice) {
+    public void displaySelection(RentHistoryDTO rentHistory, int month) {
+
+
         System.out.println("\n========선택 내역==========");
-        System.out.println("창고 이름 : " + wareHouse + "번 창고");
-        System.out.println("섹터 이름 : " + sectorName);
+        System.out.println("창고 이름 : " + rentHistory.getWarehouseId() + "번 창고");
+        System.out.println("섹터 이름 : " + rentHistory.getSectorId());
         System.out.println("임대 기간 : " + month + "개월");
-        System.out.println("임대 비용 : " + rentPrice + "만원");
+        System.out.println("임대 비용 : " + rentHistory.getRentPrice() + "만원");
     }
 
     public int confirmSelection() {
