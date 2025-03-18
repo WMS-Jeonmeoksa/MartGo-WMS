@@ -5,5 +5,5 @@ import model.dto.StockDTO;
 import java.util.List;
 
 public interface StockService {
-    List<StockDTO> getUserStock(int user_id);
+    List<StockDTO> getUserStock(String user_id);
 }

@@ -13,10 +13,11 @@ public class StockController {
         StockService stockService = new StockServiceImpl();
 
         // 입고 완료 되었을 때 해당 회원 id 를 넘겨받음
-        int user_id = 1;
+        String user_id = "U123";
         List<StockDTO> userStock = stockService.getUserStock(user_id);
         userStock.forEach(stock -> {
             System.out.println("Stock 번호: " + stock.getStock_num());
+            System.out.println("회원 ID " + stock.getUser_id());
             System.out.println("제품 ID: " + stock.getProduct_id());
             System.out.println("수량: " + stock.getCount());
             System.out.println("총가격: " + stock.getTotal_price());

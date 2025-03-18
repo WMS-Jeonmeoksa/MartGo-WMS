@@ -11,7 +11,7 @@ import java.util.List;
 public class StockServiceImpl implements StockService {
     private StockDAO stockDAO = new StockDAOImpl();
 
-    public List<StockDTO> getUserStock(int user_id) {
-        return stockDAO.checkUserStock(user_id).orElseGet(ArrayList::new);
+    public List<StockDTO> getUserStock(String user_id) {
+        return stockDAO.checkUserStock(user_id);
     }
 }
