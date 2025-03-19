@@ -29,7 +29,7 @@ public class UserController {
                     break;
                 case 2:
                     RentControllerImpl rentController = new RentControllerImpl();
-                    rentController.handleRentRequest();
+                    rentController.handleRentRequest(user.getUserId());
                     break;
                 case 3:
                     logout();

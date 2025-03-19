@@ -15,7 +15,7 @@ public class RentControllerImpl implements RentController {
     RentHistoryDTO rentHistory = new RentHistoryDTO();
 
 
-    public void handleRentRequest() {
+    public void handleRentRequest(String userId) {
 
         int menu = rentView.displayMenu();
         if (menu == 1) {
@@ -31,6 +31,7 @@ public class RentControllerImpl implements RentController {
             rentHistory.setSectorId(sectorName);
             rentHistory.setWarehouseId(wareHouse);
             rentHistory.setRentPrice(rentPrice);
+            rentHistory.setUserId(userId);
 
             String startDay = rentView.getStartDate();
             String endDate = rentService.endDate(month, startDay);
