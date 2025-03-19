@@ -20,7 +20,7 @@ public class AdminController {
             System.out.println("3. 대기중인 입고신청 목록");
             System.out.println("4. 대기중인 출고신청 목록");
             System.out.println("5. 로그아웃");
-            System.out.println("6. 로그인된 아이디 보기");
+//            System.out.println("6. 로그인된 아이디 보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
@@ -41,9 +41,9 @@ public class AdminController {
                     logout();
                     loggedIn = false;
                     break;
-                case 6:
-                    checkCurrentLogin();
-                    break;
+//                case 6:
+//                    checkCurrentLogin();
+//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
             }
@@ -60,7 +60,7 @@ public class AdminController {
             System.out.println("3. 진행중인 입고신청 목록");
             System.out.println("4. 진행중인 출고신청 목록");
             System.out.println("5. 로그아웃");
-            System.out.println("6. 로그인된 아이디 보기");
+//            System.out.println("6. 로그인된 아이디 보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
             switch (choice) {
@@ -80,9 +80,9 @@ public class AdminController {
                     logout();
                     loggedIn = false;
                     break;
-                case 6:
-                    checkCurrentLogin();
-                    break;
+//                case 6:
+//                    checkCurrentLogin();
+//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
             }

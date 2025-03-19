@@ -9,9 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
-public class LoginsignupDao {
+public class LoginsignupDAOImpl implements  LoginsignupDAO {
 
     // 회원가입
+    @Override
     public boolean insertUser(UserDto user) throws SQLException {
         String sql = "{CALL InsertUser(?, ?, ?, ?, ?, ?, ?, ?)}";
         try (Connection conn = DbUtil.getConnection();
@@ -33,6 +34,7 @@ public class LoginsignupDao {
     }
 
     // 회원 로그인
+    @Override
     public UserDto loginUser(String userId, String userPassword) {
         UserDto user = null;
         // 컬럼 이름은 테이블 정의에 맞춰 user_pw 사용
@@ -62,6 +64,7 @@ public class LoginsignupDao {
     }
 
     // 관리자 로그인
+    @Override
     public AdminDto loginAdmin(String adminId, String adminPassword) {
         AdminDto admin = null;
         String sql = "SELECT * FROM Admin WHERE admin_id = ? AND admin_pw = ?";
@@ -114,7 +117,10 @@ public class LoginsignupDao {
         return false;
     }
 
+
+
     // 로그인 성공 시 회원 id 반환
+    @Override
     public String getUserIdByLogin(String userId, String userPassword){
         String retrievedUserId = null;
         String sql = "SELECT * FROM User WHERE user_id = ? AND user_pw = ?";
@@ -125,6 +131,28 @@ public class LoginsignupDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     retrievedUserId = rs.getString("user_id");
+                    // 로그인 성공 시 해당 ID 반환
+                }
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return retrievedUserId; // 로그인 실패 시 null 반환
+    }
+
+    // 로그인 성공 시 관리자 id 반환
+    @Override
+    public String getAdminIdByLogin(String adminId, String adminPassword){
+        String retrievedUserId = null;
+        String sql = "SELECT * FROM admin WHERE admin_id = ? AND admin_pw = ?";
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, adminId);
+            pstmt.setString(2, adminPassword);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    retrievedUserId = rs.getString("admin_id");
                     // 로그인 성공 시 해당 ID 반환
                 }
             }

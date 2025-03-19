@@ -3,14 +3,14 @@ package controller;
 import java.util.Scanner;
 import model.dto.UserDto;
 import model.dto.AdminDto;
-import model.service.IoginsignupService;
+import model.service.LoginsignupServiceImpl;
 
-public class IoginsignupController {
-    private IoginsignupService service = new IoginsignupService();
+public class LoginsignupController {
+    private LoginsignupServiceImpl service = new LoginsignupServiceImpl();
     private Scanner scan = new Scanner(System.in);
     private UserController memberController = new UserController();
     private AdminController adminController = new AdminController();
-
+String userId;
     // 메인 메뉴
     public void start() {
         while (true) {
@@ -41,13 +41,15 @@ public class IoginsignupController {
         }
     }
 
+
     private void login() {
         System.out.print("아이디: ");
         String id = scan.nextLine();
         System.out.print("비밀번호: ");
         String password = scan.nextLine();
 
-        String userId = service.getUserIdAfterLogin(id,password); // 로그인 후 ID 가져오기
+
+//        String userId = service.getUserIdAfterLogin(id,password); // 로그인 후 ID 가져오기
 
 //        // 로그인 실패
 //        if (userId == null) {
@@ -65,10 +67,12 @@ public class IoginsignupController {
                 case "회원":
                     System.out.println("\n회원 로그인 성공! " + user.getUserName() + "님 환영합니다.");
                     memberController.memberMenu(user);
+                    userIdReturn(id, password);// 로그인시 유저리턴에 저장
                     return;
                 case "거래처":
                     System.out.println("\n회원(거래처) 로그인 성공! " + user.getUserName() + "님 환영합니다.");
                     memberController.memberCustomerMenu(user);
+                    userIdReturn(id, password);// 로그인시 유저리턴에 저장
                     return;
             }
         }
@@ -79,25 +83,27 @@ public class IoginsignupController {
                 case "창고관리자" :
                     System.out.println("\n관리자(창고관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
                     adminController.warehouseAdminMenu(admin);
+                    adminIdReturn(id, password);// 로그인시 관리자리턴에 저장
                     return;
                 case "총관리자" :
                     System.out.println("\n관리자(총관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
                     adminController.superAdminMenu(admin);
+                    adminIdReturn(id, password);// 로그인시 관리자리턴에 저장
                     return;
             }
         }
+
         // 최종 로그인 실패
         System.out.println("\n로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
     }
 
-    // 로그아웃
 
 
     // 회원가입 처리: 필수 입력값을 올바르게 받을 때까지 반복
     private void signUp() {
         System.out.println("=== 회원가입 ===");
 
-        String id = scan.nextLine().trim();
+        String id;
         while (true) {
             System.out.print("아이디: ");
             id = scan.nextLine().trim();
@@ -180,10 +186,21 @@ public class IoginsignupController {
         }
     }
 
+    // user아이디 반환메서드
+    public String userIdReturn(String id,  String password) {
+        return service.getUserIdAfterLogin(id,password);
+    }
+
+    // admin아이디 반환메서드
+    public  String adminIdReturn(String id, String password) {
+        return service.getAdminIdAfterLogin(id,password);
+    }
+
 
 
     public static void main(String[] args) {
-        IoginsignupController controller = new IoginsignupController();
+        LoginsignupController controller = new LoginsignupController();
         controller.start();
+
     }
 }
