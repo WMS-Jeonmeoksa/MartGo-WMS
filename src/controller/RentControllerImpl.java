@@ -15,11 +15,8 @@ public class RentControllerImpl implements RentController {
     RentHistoryDTO rentHistory = new RentHistoryDTO();
 
 
-    public void handleRentRequest(String userId) {
-
-        int menu = rentView.displayMenu();
-        if (menu == 1) {
-            rentDao.getAllWarehouses();
+    public void ApplyRent(String userId) {
+         rentDao.getAllWarehouses();
             int wareHouse = rentView.getWareHouseChoice();
             rentDao.getAllSectors(wareHouse);
             String sectorName = rentView.getSectorChoice();
@@ -40,18 +37,23 @@ public class RentControllerImpl implements RentController {
             rentView.rentEnd();
 
 
-        } else if (menu == 2) {
+        }
+
+        public void HoldRentList() {
             rentView.displayHoldRentHistory();
             RentDAOImpl.getHoldRentHistory();
             int selectRentNum = rentView.selectRentHistory();
             int adminId = 123;   // 관리자 아이디 받아야됨
             RentDAOImpl.updateAdminId(selectRentNum, adminId);
-        } else if (menu == 3) {
-            rentView.displayHoldRentHistory();
-            RentDAOImpl.getinProgressRentHistory();
-            int selectRentNum = rentView.selectRentHistory();
-            rentDao.completedRentStatus(selectRentNum);
 
         }
-    }
+
+     public void inProgressRentList() {
+         rentView.displayHoldRentHistory();
+         RentDAOImpl.getinProgressRentHistory();
+         int selectRentNum = rentView.selectRentHistory();
+         rentDao.completedRentStatus(selectRentNum);
+
+     }
+
 }

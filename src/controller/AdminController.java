@@ -8,7 +8,7 @@ public class AdminController {
 
     private Scanner scan = new Scanner(System.in);
     private String adminId = null; // 로그인한 관리자 ID 저장
-
+RentControllerImpl rentController = new RentControllerImpl();
     // 창고 관리자 메뉴
     public void warehouseAdminMenu(AdminDto admin) {
         adminId = admin.getAdminId(); // 로그인한 관리자 ID 저장
@@ -29,7 +29,7 @@ public class AdminController {
                     viewAdminInfo(admin);
                     break;
                 case 2:
-                    showPendingLeaseRequests(); // 대기중인 임대 신청 목록 조회
+                    rentController.HoldRentList(); // 대기중인 임대 신청 목록 조회
                     break;
                 case 3 :
                     showPendingStockRequests(); // 대기중인 입고 신청 목록 조회
@@ -68,7 +68,7 @@ public class AdminController {
                     viewAdminInfo(admin);
                     break;
                 case 2:
-                    showOngoingLeaseRequests();
+                    rentController.inProgressRentList();
                     break;
                 case 3:
                     showOngoingStockRequests();
