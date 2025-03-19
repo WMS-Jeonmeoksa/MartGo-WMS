@@ -1,6 +1,6 @@
 package controller;
 
 public interface RentController {
-     void handleRentRequest(String userId);
+     void ApplyRent(String userId);
 
 }
