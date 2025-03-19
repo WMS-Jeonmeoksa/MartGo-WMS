@@ -5,6 +5,11 @@ import model.dto.UserDTO;
 import java.util.Scanner;
 
 public class UserControllerImpl implements UserController {
+    RentController rentController = new RentControllerImpl();
+    IncomingController incomingController = new IncomingControllerImpl();
+    OutgoingController outgoingController = new OutgoingControllerImpl();
+    StockController stockController = new StockControllerImpl();
+    ProductController productController = new ProductControllerImpl();
 
     private Scanner scan = new Scanner(System.in);
     private String userId = null;
@@ -18,7 +23,6 @@ public class UserControllerImpl implements UserController {
             System.out.println("1. 내 정보 보기");
             System.out.println("2. 임대신청");
             System.out.println("3. 로그아웃");
-//            System.out.println("4. 로그인된 아이디보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
@@ -29,15 +33,12 @@ public class UserControllerImpl implements UserController {
                     loginsignupController.userIdReturn();
                     break;
                 case 2:
-                    applyForRental();
+                    rentController.applyRent(user.getUserId());
                     break;
                 case 3:
                     logout();
                     loggedIn = false;
                     break;
-//                case 4:
-//                    checkCurrentLogin();
-//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
 
@@ -57,7 +58,6 @@ public class UserControllerImpl implements UserController {
             System.out.println("4. 출고");
             System.out.println("5. 재고 조회");
             System.out.println("6. 로그아웃");
-//            System.out.println("7. 로그인된 아이디보기");
             System.out.print("선택 > ");
 
             int choice = Integer.parseInt(scan.nextLine());
@@ -68,24 +68,21 @@ public class UserControllerImpl implements UserController {
                     showInfo(user);
                     break;
                 case 2:
-                    addProduct();
+                    productController.registerProduct(user.getUserId());
                     break;
                 case 3:
-                    receiveStock();
+                    incomingController.requestIncoming(user.getUserId());
                     break;
                 case 4:
-                    dispatchStock();
+                    outgoingController.requestOutgoing(user.getUserId());
                     break;
                 case 5:
-                    checkInventory();
+                    stockController.printUserStock(user.getUserId());
                     break;
                 case 6:
                     logout();
                     loggedIn = false;
                     break;
-//                case 7:
-//                    checkCurrentLogin();
-//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
             }
@@ -102,29 +99,6 @@ public class UserControllerImpl implements UserController {
         System.out.println("주소: " + user.getAddress());
         System.out.println("권한: " + user.getRole());
         System.out.println("담당 창고 관리자 ID: " + user.getAdmin_id());
-    }
-
-
-    //일반회원
-    private void applyForRental() {
-        System.out.println("임대 신청");
-    }
-
-    // 거래처
-    private void addProduct() {
-        System.out.println("제품 등록");
-    }
-
-    private void receiveStock() {
-        System.out.println("입고");
-    }
-
-    private void dispatchStock() {
-        System.out.println("출고");
-    }
-
-    private void checkInventory() {
-        System.out.println("재고 조회");
     }
 
 

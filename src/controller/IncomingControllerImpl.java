@@ -51,6 +51,7 @@ public class IncomingControllerImpl implements IncomingController {
     @Override
     public void approveIncoming(String adminId) {
         String role = incomingService.getAdminRoleById(adminId);
+        System.out.println(adminId + " " + role);
         List<IncomingDTO> incomingDTOList = incomingService.getIncomingByRole(adminId, role);
         if (incomingDTOList == null || incomingDTOList.isEmpty()) {
             System.out.println(NO_INCOMING_LIST.getMessage());
@@ -65,10 +66,10 @@ public class IncomingControllerImpl implements IncomingController {
         incomingService.approveIncoming(adminId, incomingNum, role);
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
-        //incomingControllerImpl.approveIncoming("10");
-        incomingControllerImpl.requestIncoming("1");
-    }
+//    public static void main(String[] args) {
+//        Scanner sc = new Scanner(System.in);
+//        IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
+//        //incomingControllerImpl.approveIncoming("10");
+//        incomingControllerImpl.requestIncoming("1");
+//    }
 }

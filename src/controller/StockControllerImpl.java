@@ -7,7 +7,7 @@ import model.service.StockServiceImpl;
 
 import java.util.List;
 
-public class StockControllerImpl {
+public class StockControllerImpl implements StockController {
     StockService stockService = new StockServiceImpl();
 
     public static void main(String[] args) {

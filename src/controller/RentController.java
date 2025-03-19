@@ -1,6 +1,7 @@
 package controller;
 
 public interface RentController {
-     void ApplyRent(String userId);
-
+     void applyRent(String userId);
+     void holdRentList(String adminId);
+     void inProgressRentList();
 }

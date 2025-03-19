@@ -1,6 +1,7 @@
 package controller;
 
 import model.dto.AdminDTO;
+import model.dto.UserDTO;
 
 public interface AdminController {
     //창고 관리자 메뉴
