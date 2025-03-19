@@ -29,16 +29,15 @@ public class RentControllerImpl implements RentController {
             rentHistory.setWarehouseId(wareHouse);
             rentHistory.setRentPrice(rentPrice);
 
-            if (rentPrice != -1) {
-                rentView.displaySelection(rentHistory, month);
-                int select = rentView.confirmSelection();
-                if (select == 1) {
-                    String startDay = rentView.getStartDate();
+            rentView.displaySelection(rentHistory, month);
+            int select = rentView.confirmSelection();
+            if (select == 1) {
+                String startDay = rentView.getStartDate();
 
-                    rentService.saveRentHistory(rentHistory, month, startDay);
-                    rentView.rentEnd();
-                }
+                rentService.saveRentHistory(rentHistory, month, startDay);
+                rentView.rentEnd();
             }
+
         } else if (menu == 2) {
             rentView.displayHoldRentHistory();
             RentDaoImpl.getHoldRentHistory();
