@@ -4,5 +4,5 @@ import javax.management.relation.Role;
 
 public interface OutgoingController {
     void requestOutgoing(String userId);
-    void approveOutgoing(String role);
+    void approveOutgoing(String adminId);
 }

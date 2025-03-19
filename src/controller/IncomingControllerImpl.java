@@ -68,7 +68,7 @@ public class IncomingControllerImpl implements IncomingController {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
-        incomingControllerImpl.approveIncoming("10");
-        //incomingControllerImpl.requestIncoming("1");
+        //incomingControllerImpl.approveIncoming("10");
+        incomingControllerImpl.requestIncoming("1");
     }
 }
