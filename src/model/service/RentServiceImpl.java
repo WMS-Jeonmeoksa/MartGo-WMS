@@ -25,4 +25,11 @@ public class RentServiceImpl implements RentService {
 
         rentDao.saveDb(rentHistory);
     }
+
+    public String endDate(int month, String startDay) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDay, formatter);
+        LocalDate endDate = startDate.plusMonths(month);
+        return endDate.format(formatter);
+    }
 }
