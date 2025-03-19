@@ -6,19 +6,85 @@ import model.dto.RentHistoryDTO;
 import java.sql.*;
 
 public class RentDaoImpl implements RentDao {
+    public void getAllWarehouses() {
+        String sql = "{CALL GetAllWarehouses()}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("warehouse_id");
+                String name = rs.getString("warehouse_name");
+                String location = rs.getString("location");
+                int height = rs.getInt("height");
+                int width = rs.getInt("width");
+                double far = rs.getDouble("FAR");
+
+                System.out.printf("창고 ID: %d, 창고 이름: %s, 창고 위치: %s, 창고 높이: %d, 창고 면적: %d, 창고 용적률: %.2f%n",
+                        id, name, location, height, width, far);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAllSectors(int warehouseId) {
+        String sql = "{CALL GetAllSectors(?)}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);) {
+
+            stmt.setInt(1, warehouseId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String sectorId = rs.getString("sector_id");
+                int height = rs.getInt("height");
+                int width = rs.getInt("width");
+                double far = rs.getDouble("FAR");
+
+                System.out.printf("섹터 ID: %s, 섹터 높이: %d, 섹터 면적: %d, 섹터 용적률: %.2f\n",
+                        sectorId, height, width, far);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getCostInfo(int warehouseId, String sectorId) {
+        String sql = "{CALL GetCostInfoSector(?, ?)}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);) {
+
+            stmt.setInt(1, warehouseId);
+            stmt.setString(2, sectorId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                System.out.println("\n=== 기간별 비용 정보 조회 ===");
+                while (rs.next()) {
+                    String period = rs.getString("period");
+                    int price = rs.getInt("price");
+                    System.out.printf("기간: %s, 가격: %d만원%n", period, price);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public int getRentPrice(int wareHouse, String sectorName, int month) {
         String query = "{CALL GetCostInfo(?, ?, ?)}";
-        int rentPrice = -1;
+        int rentPrice = 0;
 
         try (Connection connection = DbUtil.getConnection();
-             CallableStatement cstmt = connection.prepareCall(query)) {
+             CallableStatement stmt = connection.prepareCall(query)) {
 
-            cstmt.setInt(1, wareHouse);
-            cstmt.setString(2, sectorName);
-            cstmt.setString(3, month + "개월");
+            stmt.setInt(1, wareHouse);
+            stmt.setString(2, sectorName);
+            stmt.setString(3, month + "개월");
 
-            try (ResultSet rs = cstmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     rentPrice = rs.getInt("price");
                 }
@@ -33,16 +99,16 @@ public class RentDaoImpl implements RentDao {
         String insertQuery = "{CALL InsertRentHistory(?, ?, ?, ?, ?, ?)}";
 
         try (Connection connection = DbUtil.getConnection();
-             CallableStatement cstmt = connection.prepareCall(insertQuery)) {
+             CallableStatement stmt = connection.prepareCall(insertQuery)) {
 
-            cstmt.setString(1, rentHistory.getSectorId());
-            cstmt.setInt(2, rentHistory.getWarehouseId());
-            cstmt.setDate(3, new java.sql.Date(rentHistory.getRentStartDate().getTime()));
-            cstmt.setDate(4, new java.sql.Date(rentHistory.getRentEndDate().getTime()));
-            cstmt.setInt(5, rentHistory.getRentPrice());
-            cstmt.setInt(6, rentHistory.getUserId());
+            stmt.setString(1, rentHistory.getSectorId());
+            stmt.setInt(2, rentHistory.getWarehouseId());
+            stmt.setDate(3, new java.sql.Date(rentHistory.getRentStartDate().getTime()));
+            stmt.setDate(4, new java.sql.Date(rentHistory.getRentEndDate().getTime()));
+            stmt.setInt(5, rentHistory.getRentPrice());
+            stmt.setInt(6, rentHistory.getUserId());
 
-            cstmt.executeUpdate();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,8 +146,7 @@ public class RentDaoImpl implements RentDao {
 
 
         try (Connection conn = DbUtil.getConnection();
-             CallableStatement stmt = conn.prepareCall(sql);)
-        {
+             CallableStatement stmt = conn.prepareCall(sql);) {
             stmt.setInt(1, rentNum);
             stmt.setInt(2, adminId);
 
