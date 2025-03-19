@@ -28,7 +28,7 @@ public class OutgoingServiceImpl implements OutgoingService {
         if (role.equals("창고관리자")) {
             return outgoingDAO.getOutgoingByStatus(adminId, "대기");
         } else if (role.equals("총관리자")) {
-            return outgoingDAO.getOutgoingByStatus(adminId, "진행중");
+            return outgoingDAO.getOutgoingByStatusNext(adminId, "진행중");
         }
         return null;
     }
