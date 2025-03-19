@@ -1,17 +1,17 @@
 package controller;
 
 import java.util.Scanner;
-import model.dto.UserDto;
-import model.dto.AdminDto;
-import model.service.LoginsignupServiceImpl;
+import model.dto.UserDTO;
+import model.dto.AdminDTO;
+import model.service.LoginSignupServiceImpl;
 
-public class LoginsignupController {
-    private LoginsignupServiceImpl service = new LoginsignupServiceImpl();
+public class LoginSignupControllerImpl implements LoginSignupController {
+    private LoginSignupServiceImpl service = new LoginSignupServiceImpl();
     private Scanner scan = new Scanner(System.in);
-    private UserController memberController = new UserController();
-    private AdminController adminController = new AdminController();
-    private UserDto userDto;
-    private AdminDto adminDto;
+    private UserControllerImpl memberController = new UserControllerImpl();
+    private AdminControllerImpl adminController = new AdminControllerImpl();
+    private UserDTO userDto;
+    private AdminDTO adminDto;
     // 메인 메뉴
     public void start() {
         while (true) {
@@ -60,8 +60,8 @@ public class LoginsignupController {
 //        //여기에 안걸렸다면 로그인이 성공된거긴 함
 
         // 먼저 회원 테이블에서 로그인 시도
-        UserDto user = service.loginUser(id, password);
-        AdminDto admin = service.loginAdmin(id, password);
+        UserDTO user = service.loginUser(id, password);
+        AdminDTO admin = service.loginAdmin(id, password);
 
         if(user != null){
 
@@ -182,7 +182,7 @@ public class LoginsignupController {
             break;
         }
 
-        UserDto user = new UserDto(id,name,password,phone,email,address,"회원","0"); //아직admin_id를 모르니깐 0으로 입력
+        UserDTO user = new UserDTO(id,name,password,phone,email,address,"회원","0"); //아직admin_id를 모르니깐 0으로 입력
 
         boolean result = service.signUpUser(user);
         if (result) {
@@ -211,7 +211,7 @@ public class LoginsignupController {
 
 
     public static void main(String[] args) {
-        LoginsignupController controller = new LoginsignupController();
+        LoginSignupControllerImpl controller = new LoginSignupControllerImpl();
         controller.start();
 
     }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AdminDto {
+public class AdminDTO {
     private String adminId;
     private String adminName;
     private String adminPassword;
@@ -14,6 +14,6 @@ public class AdminDto {
     private String role; //창고관리자 또는 총관리자
     private Integer warehouseId;
 
-    public AdminDto() {
+    public AdminDTO() {
     }
 }
