@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserDto {
+public class UserDTO {
     private String userId;
     private String userName;
     private String userPassword;
@@ -15,6 +15,6 @@ public class UserDto {
     private String role; // 회원 또는 거래처
     private String admin_id;
 
-    public UserDto() {
+    public UserDTO() {
     }
 }

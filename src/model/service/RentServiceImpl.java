@@ -1,6 +1,5 @@
 package model.service;
 
-import controller.LoginsignupController;
 import model.dao.RentDAOImpl;
 import model.dto.RentHistoryDTO;
 
