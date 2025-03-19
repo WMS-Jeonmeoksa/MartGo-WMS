@@ -2,6 +2,9 @@ package controller;
 
 import common.constants.ErrorCode;
 import model.dto.OutgoingDTO;
+import model.dto.StockDTO;
+import model.service.IncomingService;
+import model.service.IncomingServiceImpl;
 import model.service.OutgoingService;
 import model.service.OutgoingServiceImpl;
 
@@ -16,6 +19,7 @@ import static common.constants.MessageEnum.*;
 
 public class OutgoingControllerImpl implements OutgoingController {
     OutgoingService outgoingService = new OutgoingServiceImpl();
+    IncomingService incomingService = new IncomingServiceImpl();
     Scanner sc = new Scanner(System.in);
 
     @Override
@@ -23,7 +27,10 @@ public class OutgoingControllerImpl implements OutgoingController {
         System.out.println(INPUT_OUTGOING_TITLE.getMessage());
         System.out.println(SHOW_STOCK_TITLE.getMessage());
 
-        outgoingService.showStockByUserId(userId);
+        List<StockDTO> stockDTOList = outgoingService.showStockByUserId(userId);
+        for (StockDTO stockDTO : stockDTOList) {
+            System.out.println(stockDTO);
+        }
 
         System.out.println(INPUT_OUTGOING_STOCK_NUM.getMessage());
         int stockNum = Integer.parseInt(sc.nextLine());
@@ -53,8 +60,9 @@ public class OutgoingControllerImpl implements OutgoingController {
     }
 
     @Override
-    public void approveOutgoing(String role) {
-        List<OutgoingDTO> outgoingDTOList = outgoingService.getOutgoingByRole(role);
+    public void approveOutgoing(String adminId) {
+        String role = incomingService.getAdminRoleById(adminId);
+        List<OutgoingDTO> outgoingDTOList = outgoingService.getOutgoingByRole(adminId, role);
         if (outgoingDTOList == null || outgoingDTOList.isEmpty()) {
             System.out.println(NO_OUTGOING_LIST.getMessage());
             return;
@@ -65,12 +73,13 @@ public class OutgoingControllerImpl implements OutgoingController {
         System.out.println(INPUT_OUTGOING_APPROVE.getMessage());
         int outgoingNum = Integer.parseInt(sc.nextLine());
 
-        outgoingService.approveOutgoing(outgoingNum, role);
+        outgoingService.approveOutgoing(adminId, outgoingNum, role);
     }
 
-//    public static void main(String[] args) {
-//        OutgoingControllerImpl outgoingControllerImpl = new OutgoingControllerImpl();
-//        Scanner sc = new Scanner(System.in);
-//        outgoingControllerImpl.requestOutgoing("1");
-//    }
+    public static void main(String[] args) {
+        OutgoingControllerImpl outgoingControllerImpl = new OutgoingControllerImpl();
+        Scanner sc = new Scanner(System.in);
+        //outgoingControllerImpl.requestOutgoing("1");
+        outgoingControllerImpl.approveOutgoing(sc.nextLine());
+    }
 }
