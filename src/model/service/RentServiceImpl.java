@@ -1,5 +1,6 @@
 package model.service;
 
+import controller.LoginsignupController;
 import model.dao.RentDAOImpl;
 import model.dto.RentHistoryDTO;
 
@@ -20,7 +21,8 @@ public class RentServiceImpl implements RentService {
         rentHistory.setRentStartDate(Date.valueOf(startDate));
         rentHistory.setRentEndDate(Date.valueOf(endDate));
         rentHistory.setRentPrice(rentHistory.getRentPrice());
-        rentHistory.setUserId("u01");       // 회원 ID받아와서 넣어야함
+        LoginsignupController loginsignupController = new LoginsignupController();
+        rentHistory.setUserId(loginsignupController.userIdReturn());
 
         rentDao.saveDb(rentHistory);
     }

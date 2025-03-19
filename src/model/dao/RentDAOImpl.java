@@ -106,7 +106,7 @@ public class RentDAOImpl implements RentDAO {
             stmt.setDate(3, new java.sql.Date(rentHistory.getRentStartDate().getTime()));
             stmt.setDate(4, new java.sql.Date(rentHistory.getRentEndDate().getTime()));
             stmt.setInt(5, rentHistory.getRentPrice());
-            stmt.setInt(rentHistory.getUserId(), 6);
+            stmt.setString(6, rentHistory.getUserId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {

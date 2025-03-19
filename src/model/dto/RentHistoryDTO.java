@@ -16,7 +16,7 @@ public class RentHistoryDTO {
     private Date rentEndDate;
     private int rentPrice;
     private String status;
-    private int adminId;
+    private String adminId;
 
     public RentHistoryDTO() {
     }
