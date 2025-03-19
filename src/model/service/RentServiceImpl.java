@@ -21,9 +21,6 @@ public class RentServiceImpl implements RentService {
         rentHistory.setRentStartDate(Date.valueOf(startDate));
         rentHistory.setRentEndDate(Date.valueOf(endDate));
         rentHistory.setRentPrice(rentHistory.getRentPrice());
-        LoginsignupController loginsignupController = new LoginsignupController();
-        String userIdReturn = loginsignupController.userIdReturn();
-        rentHistory.setUserId(userIdReturn);
 
         rentDao.saveDb(rentHistory);
     }
