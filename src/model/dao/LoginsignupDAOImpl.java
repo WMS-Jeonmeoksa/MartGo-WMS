@@ -25,7 +25,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             pstmt.setString(5, user.getEmail());
             pstmt.setString(6, user.getAddress());
             pstmt.setString(7, user.getRole());
-//            pstmt.setInt(8, user.getAdmin_id());
+            pstmt.setString(8, user.getAdmin_id());
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
                         rs.getString("email"),
                         rs.getString("address"),
                         rs.getString("role"),
-                        rs.getInt("admin_id") // NULL 이면 0으로 저장됨.
+                        rs.getString("admin_id") // NULL 이면 0으로 저장됨.
                 );
                 }
             }
@@ -180,7 +180,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
                             rs.getString("email"),
                             rs.getString("address"),
                             rs.getString("role"),
-                            rs.getInt("admin_id") // NULL 이면 0으로 저장됨.
+                            rs.getString("admin_id") // NULL 이면 0으로 저장됨.
                     );
                 }
             }

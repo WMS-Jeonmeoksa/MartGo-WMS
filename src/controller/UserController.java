@@ -23,6 +23,8 @@ public class UserController {
             switch (choice){
                 case 1:
                     showInfo(user);
+                    LoginsignupController loginsignupController = new LoginsignupController();
+                    loginsignupController.userIdReturn();
                     break;
                 case 2:
                     applyForRental();
