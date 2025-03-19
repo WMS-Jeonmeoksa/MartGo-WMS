@@ -8,7 +8,6 @@ public class UserController {
 
     private Scanner scan = new Scanner(System.in);
     private String userId = null;
-
     public void memberMenu(UserDto user){
         userId = user.getUserId();
         boolean loggedIn = true;
@@ -17,7 +16,7 @@ public class UserController {
             System.out.println("1. 내 정보 보기");
             System.out.println("2. 임대신청");
             System.out.println("3. 로그아웃");
-            System.out.println("4. 로그인된 아이디보기");
+//            System.out.println("4. 로그인된 아이디보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
@@ -26,21 +25,22 @@ public class UserController {
                     showInfo(user);
                     break;
                 case 2:
-                    System.out.println("임대 신청");
+                    applyForRental();
                     break;
                 case 3:
                     logout();
                     loggedIn = false;
                     break;
-                case 4:
-                    checkCurrentLogin();
-                    break;
+//                case 4:
+//                    checkCurrentLogin();
+//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
 
             }
         }
     }
+
 
     public void memberCustomerMenu(UserDto user) {
         boolean loggedIn = true;
@@ -52,7 +52,7 @@ public class UserController {
             System.out.println("4. 출고");
             System.out.println("5. 재고 조회");
             System.out.println("6. 로그아웃");
-            System.out.println("7. 로그인된 아이디보기");
+//            System.out.println("7. 로그인된 아이디보기");
             System.out.print("선택 > ");
 
             int choice = Integer.parseInt(scan.nextLine());
@@ -63,29 +63,30 @@ public class UserController {
                     showInfo(user);
                     break;
                 case 2:
-                    System.out.println("제품 등록");
+                    addProduct();
                     break;
                 case 3:
-                    System.out.println("입고");
+                    receiveStock();
                     break;
                 case 4:
-                    System.out.println("출고");
+                    dispatchStock();
                     break;
                 case 5:
-                    System.out.println("재고 조회");
+                    checkInventory();
                     break;
                 case 6:
                     logout();
                     loggedIn = false;
                     break;
-                case 7:
-                    checkCurrentLogin();
-                    break;
+//                case 7:
+//                    checkCurrentLogin();
+//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
             }
         }
     }
+
 
         private void showInfo(UserDto user){
             System.out.println("\n=== 내 정보 ===");
@@ -99,7 +100,27 @@ public class UserController {
         }
 
 
-        // 로그인: 아이디와 비밀번호를 통해 회원 또는 관리자 로그인 후 전용 메뉴 진입
+    //일반회원
+    public void applyForRental(){
+        System.out.println("임대 신청");
+    }
+
+    // 거래처
+    public void addProduct(){
+        System.out.println("제품 등록");
+    }
+    public void receiveStock(){
+        System.out.println("입고");
+    }
+    public void dispatchStock(){
+        System.out.println("출고");
+    }
+    public void checkInventory(){
+        System.out.println("재고 조회");
+    }
+
+
+    // 로그인: 아이디와 비밀번호를 통해 회원 또는 관리자 로그인 후 전용 메뉴 진입
         private void logout() {
             System.out.println("\n로그아웃 되었습니다.");
             userId = null; // 로그인 ID 초기화
@@ -111,7 +132,7 @@ public class UserController {
                 System.out.println("현재 로그인된 사용자가 없습니다.");
             }
             else{
-                System.out.println("현재 로그인한 사용자 ID :" + userId );
+                System.out.println("현재 로그인한 사용자 ID :" +  userId);
             }
         }
     }
