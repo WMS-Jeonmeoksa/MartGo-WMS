@@ -1,6 +1,7 @@
 package view;
 
 import model.dto.RentHistoryDTO;
+
 import java.util.Scanner;
 
 public class RentViewImpl {
@@ -15,25 +16,15 @@ public class RentViewImpl {
     }
 
     public int getWareHouseChoice() {
-        System.out.println("창고 목록");
-        System.out.println("1. 1번 창고  2. 2번 창고");
         System.out.print("원하는 창고번호를 선택하세요: ");
-        return sc.nextInt();
+        int warehouse = sc.nextInt();
+        System.out.println("\n"+warehouse+"번 창고의 섹터 목록");
+        return warehouse;
     }
 
-    public String getSectorChoice(int wareHouse) {
-        System.out.println("\n섹터 목록");
-        System.out.println("1. A섹터 |  2. B섹터 |  3. C섹터 | 4. D섹터");
+    public String getSectorChoice() {
         System.out.print("원하는 섹터를 선택하세요: ");
-        int sector = sc.nextInt();
-
-        return switch (sector) {
-            case 1 -> wareHouse + "A";
-            case 2 -> wareHouse + "B";
-            case 3 -> wareHouse + "C";
-            case 4 -> wareHouse + "D";
-            default -> " ";
-        };
+        return sc.next();
     }
 
     public int getRentPeriod() {
@@ -43,23 +34,20 @@ public class RentViewImpl {
         return sc.nextInt();
     }
 
-    public void displaySelection(RentHistoryDTO rentHistory, int month) {
-        System.out.println("\n========선택 내역==========");
-        System.out.println("창고 이름 : " + rentHistory.getWarehouseId() + "번 창고");
-        System.out.println("섹터 이름 : " + rentHistory.getSectorId());
-        System.out.println("임대 기간 : " + month + "개월");
-        System.out.println("임대 비용 : " + rentHistory.getRentPrice() + "만원");
-    }
-
-    public int confirmSelection() {
-        System.out.println("이대로 진행하시겠습니까? (1. 예 / 2. 아니오)");
-        return sc.nextInt();
-    }
-
     public String getStartDate() {
         System.out.println("원하는 임대 시작일을 입력하세요: 예) 2025-03-21");
         sc.nextLine();
         return sc.nextLine();
+    }
+
+    public int LastConfirm(RentHistoryDTO rentHistory, String startDay, String endDate) {
+        System.out.println("\n========최종 선택 내역==========");
+        System.out.println("창고 이름 : " + rentHistory.getWarehouseId() + "번 창고");
+        System.out.println("섹터 이름 : " + rentHistory.getSectorId());
+        System.out.println("임대 기간 : " + startDay+" ~ "+ endDate);
+        System.out.println("임대 비용 : " + rentHistory.getRentPrice() + "만원");
+        System.out.println("임대 신청 하시겠습니까? (1. 예 / 2. 아니오)");
+        return sc.nextInt();
     }
 
     public void rentEnd() {

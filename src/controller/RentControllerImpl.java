@@ -19,24 +19,25 @@ public class RentControllerImpl implements RentController {
 
         int menu = rentView.displayMenu();
         if (menu == 1) {
+            rentDao.getAllWarehouses();
             int wareHouse = rentView.getWareHouseChoice();
-            String sectorName = rentView.getSectorChoice(wareHouse);
+            rentDao.getAllSectors(wareHouse);
+            String sectorName = rentView.getSectorChoice();
+            rentDao.getCostInfo(wareHouse, sectorName);
+
             int month = rentView.getRentPeriod();
 
             int rentPrice = rentDao.getRentPrice(wareHouse, sectorName, month);
-
             rentHistory.setSectorId(sectorName);
             rentHistory.setWarehouseId(wareHouse);
             rentHistory.setRentPrice(rentPrice);
 
-            rentView.displaySelection(rentHistory, month);
-            int select = rentView.confirmSelection();
-            if (select == 1) {
-                String startDay = rentView.getStartDate();
+            String startDay = rentView.getStartDate();
+            String endDate = rentService.endDate(month, startDay);
+            rentView.LastConfirm(rentHistory, startDay, endDate);
+            rentService.saveRentHistory(rentHistory, month, startDay);
+            rentView.rentEnd();
 
-                rentService.saveRentHistory(rentHistory, month, startDay);
-                rentView.rentEnd();
-            }
 
         } else if (menu == 2) {
             rentView.displayHoldRentHistory();
