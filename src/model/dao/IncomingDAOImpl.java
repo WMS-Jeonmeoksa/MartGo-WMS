@@ -35,15 +35,40 @@ public class IncomingDAOImpl implements IncomingDAO {
     }
 
     @Override
-    public List<IncomingDTO> getIncomingByStatus(String status) {
-        List<IncomingDTO> incomingDTOList = new ArrayList<>();
+    public String getAdminRoleById(String adminId) {
 
-        String sql = "SELECT * FROM incoming WHERE status = ?";
+        String sql = "SELECT role FROM admin WHERE admin_id = ?";
 
         try {
             Connection conn = DbUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, status);
+            ps.setString(1, adminId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("role");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public List<IncomingDTO> getIncomingByStatus(String adminId, String status) {
+        List<IncomingDTO> incomingDTOList = new ArrayList<>();
+
+        String sql = new StringBuilder()
+                .append("SELECT i.* ")
+                .append("FROM incoming i ")
+                .append("JOIN user u ON(i.user_id = u.user_id) ")
+                .append("WHERE u.admin_id = ? AND i.status = ? ").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, adminId);
+            ps.setString(2, status);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -79,5 +104,30 @@ public class IncomingDAOImpl implements IncomingDAO {
             e.printStackTrace();
             System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
         }
+    }
+
+    @Override
+    public String getAdminIdByIncomingNum(int incomingNum) {
+
+        String sql = new StringBuilder()
+                .append("SELECT u.admin_id ")
+                .append("FROM incoming i ")
+                .append("JOIN user u ON(i.user_id = u.user_id) ")
+                .append("WHERE i.incoming_num = ? ").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, incomingNum);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("admin_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
+        }
+        return null;
     }
 }

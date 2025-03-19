@@ -49,8 +49,9 @@ public class IncomingControllerImpl implements IncomingController {
     }
 
     @Override
-    public void approveIncoming(String role) {
-        List<IncomingDTO> incomingDTOList = incomingService.getIncomingByRole(role);
+    public void approveIncoming(String adminId) {
+        String role = incomingService.getAdminRoleById(adminId);
+        List<IncomingDTO> incomingDTOList = incomingService.getIncomingByRole(adminId, role);
         if (incomingDTOList == null || incomingDTOList.isEmpty()) {
             System.out.println(NO_INCOMING_LIST.getMessage());
             return;
@@ -61,13 +62,13 @@ public class IncomingControllerImpl implements IncomingController {
         System.out.println(INPUT_INCOMING_APPROVE.getMessage());
         int incomingNum = Integer.parseInt(sc.nextLine());
 
-        incomingService.approveIncoming(incomingNum, role);
+        incomingService.approveIncoming(adminId, incomingNum, role);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
-        incomingControllerImpl.approveIncoming("총관리자");
+        incomingControllerImpl.approveIncoming("10");
         //incomingControllerImpl.requestIncoming("1");
     }
 }
