@@ -20,7 +20,6 @@ public class AdminController {
             System.out.println("3. 대기중인 입고신청 목록");
             System.out.println("4. 대기중인 출고신청 목록");
             System.out.println("5. 로그아웃");
-//            System.out.println("6. 로그인된 아이디 보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
