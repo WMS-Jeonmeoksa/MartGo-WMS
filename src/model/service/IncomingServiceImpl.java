@@ -2,14 +2,20 @@ package model.service;
 
 import common.constants.ErrorCode;
 import common.constants.MessageEnum;
-import model.dao.IncomingDAO;
-import model.dao.IncomingDAOImpl;
+import model.dao.*;
 import model.dto.IncomingDTO;
+import model.dto.ProductDTO;
 
 import java.util.List;
 
 public class IncomingServiceImpl implements IncomingService{
     IncomingDAO incomingDAO = new IncomingDAOImpl();
+    ProductDAO productDAO = new ProductDAOImpl();
+
+    @Override
+    public List<ProductDTO> getProductByUserId(String userId) {
+        return productDAO.getProductByUserId(userId);
+    }
 
     @Override
     public void requestIncoming(IncomingDTO incomingDTO) {
@@ -27,7 +33,7 @@ public class IncomingServiceImpl implements IncomingService{
         if (role.equals("창고관리자")) {
             return incomingDAO.getIncomingByStatus(adminId,"대기");
         } else if (role.equals("총관리자")) {
-            return incomingDAO.getIncomingByStatus(adminId,"진행중");
+            return incomingDAO.getIncomingByStatusNext(adminId,"진행중");
         }
         return null;
     }
