@@ -1,5 +1,6 @@
 package model.service;
 
+import common.constants.ErrorCode;
 import common.constants.MessageEnum;
 import model.dao.IncomingDAO;
 import model.dao.IncomingDAOImpl;
@@ -17,21 +18,30 @@ public class IncomingServiceImpl implements IncomingService{
     }
 
     @Override
-    public List<IncomingDTO> getIncomingByRole(String role) {
+    public String getAdminRoleById(String adminId) {
+        return incomingDAO.getAdminRoleById(adminId);
+    }
+
+    @Override
+    public List<IncomingDTO> getIncomingByRole(String adminId, String role) {
         if (role.equals("창고관리자")) {
-            return incomingDAO.getIncomingByStatus("대기");
+            return incomingDAO.getIncomingByStatus(adminId,"대기");
         } else if (role.equals("총관리자")) {
-            return incomingDAO.getIncomingByStatus("진행중");
+            return incomingDAO.getIncomingByStatus(adminId,"진행중");
         }
         return null;
     }
 
     @Override
-    public void approveIncoming(int incomingNum, String role) {
-        String newStatus = null;
-        if (role.equals("창고관리자")) newStatus = "진행중";
-        else if (role.equals("총관리자")) newStatus = "완료";
-        incomingDAO.updateIncomingStatus(incomingNum, newStatus);
-        System.out.println(MessageEnum.INCOMING_APPROVE_SUCCESS.getMessage());
+    public void approveIncoming(String adminId, int incomingNum, String role) {
+        if (adminId.equals(incomingDAO.getAdminIdByIncomingNum(incomingNum))) {
+            String newStatus = null;
+            if (role.equals("창고관리자")) newStatus = "진행중";
+            else if (role.equals("총관리자")) newStatus = "완료";
+            incomingDAO.updateIncomingStatus(incomingNum, newStatus);
+            System.out.println(MessageEnum.INCOMING_APPROVE_SUCCESS.getMessage());
+        } else {
+            System.out.println(ErrorCode.NO_INCOMINGNUM_APPROVE.getMessage());
+        }
     }
 }
