@@ -1,6 +1,6 @@
 package controller;
 
-import model.dao.RentDaoImpl;
+import model.dao.RentDAOImpl;
 import model.dto.RentHistoryDTO;
 import model.service.RentService;
 import model.service.RentServiceImpl;
@@ -11,11 +11,11 @@ public class RentControllerImpl implements RentController {
 
     RentService rentService = new RentServiceImpl();
     RentViewImpl rentView = new RentViewImpl();
-    RentDaoImpl rentDao = new RentDaoImpl();
+    RentDAOImpl rentDao = new RentDAOImpl();
     RentHistoryDTO rentHistory = new RentHistoryDTO();
 
 
-    public void handleRentRequest() {
+    public void handleRentRequest(String userId) {
 
         int menu = rentView.displayMenu();
         if (menu == 1) {
@@ -31,6 +31,7 @@ public class RentControllerImpl implements RentController {
             rentHistory.setSectorId(sectorName);
             rentHistory.setWarehouseId(wareHouse);
             rentHistory.setRentPrice(rentPrice);
+            rentHistory.setUserId(userId);
 
             String startDay = rentView.getStartDate();
             String endDate = rentService.endDate(month, startDay);
@@ -41,13 +42,13 @@ public class RentControllerImpl implements RentController {
 
         } else if (menu == 2) {
             rentView.displayHoldRentHistory();
-            RentDaoImpl.getHoldRentHistory();
+            RentDAOImpl.getHoldRentHistory();
             int selectRentNum = rentView.selectRentHistory();
             int adminId = 123;   // 관리자 아이디 받아야됨
-            RentDaoImpl.updateAdminId(selectRentNum, adminId);
+            RentDAOImpl.updateAdminId(selectRentNum, adminId);
         } else if (menu == 3) {
             rentView.displayHoldRentHistory();
-            RentDaoImpl.getinProgressRentHistory();
+            RentDAOImpl.getinProgressRentHistory();
             int selectRentNum = rentView.selectRentHistory();
             rentDao.completedRentStatus(selectRentNum);
 
