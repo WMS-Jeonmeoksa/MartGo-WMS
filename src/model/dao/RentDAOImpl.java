@@ -5,7 +5,7 @@ import model.dto.RentHistoryDTO;
 
 import java.sql.*;
 
-public class RentDaoImpl implements RentDao {
+public class RentDAOImpl implements RentDAO {
     public void getAllWarehouses() {
         String sql = "{CALL GetAllWarehouses()}";
 
@@ -106,7 +106,7 @@ public class RentDaoImpl implements RentDao {
             stmt.setDate(3, new java.sql.Date(rentHistory.getRentStartDate().getTime()));
             stmt.setDate(4, new java.sql.Date(rentHistory.getRentEndDate().getTime()));
             stmt.setInt(5, rentHistory.getRentPrice());
-            stmt.setInt(6, rentHistory.getUserId());
+            stmt.setInt(rentHistory.getUserId(), 6);
 
             stmt.executeUpdate();
         } catch (SQLException e) {
