@@ -17,14 +17,27 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public List<StockDTO> getAllStock(String admin_id) {
-        List<StockDTO> resultAllStock = stockDAO.checkAllStock(admin_id);
-        return resultAllStock;
+    public List<StockDTO> getAdminUserStock(String admin_id) {
+        List<StockDTO> resultAdminUserStock = stockDAO.checkAdminUserStock(admin_id);
+        return resultAdminUserStock;
     }
 
     @Override
-    public List<StockHistoryDTO> getStockHistoryList() {
-        List<StockHistoryDTO> resultAllStockHistory = stockDAO.checkStockHistoryList();
-        return resultAllStockHistory;
+    public List<StockDTO> getGeneralStock(String admin_id) {
+        List<StockDTO> resultGeneralStock = stockDAO.checkGeneralStock(admin_id);
+        return resultGeneralStock;
     }
+
+    @Override
+    public List<StockHistoryDTO> getAdminStockHistory(String admin_id) {
+        List<StockHistoryDTO> resultAdminStockHistory = stockDAO.checkAdminStockHistory(admin_id);
+        return resultAdminStockHistory;
+    }
+
+    @Override
+    public List<StockHistoryDTO> getGeneralStockHistory(String admin_id) {
+        List<StockHistoryDTO> resultGeneralStockHistory = stockDAO.checkGeneralStockHistory(admin_id);
+        return resultGeneralStockHistory;
+    }
+
 }
