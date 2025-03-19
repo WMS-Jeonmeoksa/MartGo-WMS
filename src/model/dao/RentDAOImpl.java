@@ -140,7 +140,6 @@ public class RentDAOImpl implements RentDAO {
             e.printStackTrace();
         }
     }
-
     public void updateUserAdminId() {
 
         String sql = "{CALL updateUserAdminid()}";
@@ -153,14 +152,14 @@ public class RentDAOImpl implements RentDAO {
         }
     }
 
-    public static void updateAdminId(int rentNum, int adminId) {
+    public static void updateAdminId(int rentNum, String adminId) {
         String sql = "{CALL UpdateAdminId(?, ?)}";
 
 
         try (Connection conn = DbUtil.getConnection();
              CallableStatement stmt = conn.prepareCall(sql);) {
             stmt.setInt(1, rentNum);
-            stmt.setInt(2, adminId);
+            stmt.setString(2, adminId);
 
             stmt.executeUpdate();
 
@@ -187,7 +186,7 @@ public class RentDAOImpl implements RentDAO {
                 Date rentEndDate = rs.getDate("rent_end_date");
                 int rentPrice = rs.getInt("rent_price");
                 String status = rs.getString("status");
-                int adminId = rs.getInt("admin_id");
+                String adminId = rs.getString("admin_id");
 
                 System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
                         ", 창고: " + warehouseId + ", 회원ID: " + userId +

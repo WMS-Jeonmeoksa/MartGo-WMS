@@ -2,6 +2,7 @@ package controller;
 
 import common.constants.ErrorCode;
 import model.dto.IncomingDTO;
+import model.dto.ProductDTO;
 import model.service.IncomingService;
 import model.service.IncomingServiceImpl;
 
@@ -20,6 +21,10 @@ public class IncomingControllerImpl implements IncomingController {
     @Override
     public void requestIncoming(String userId) {
         System.out.println(INPUT_INCOMING_TITLE.getMessage());
+        List<ProductDTO> productDTOList = incomingService.getProductByUserId(userId);
+        for (ProductDTO productDTO : productDTOList) {
+            System.out.println(productDTO);
+        }
         System.out.println(INPUT_INCOMING_PRODUCT_ID.getMessage());
         String productId = sc.nextLine();
         System.out.println(INPUT_INCOMING_COUNT.getMessage());
@@ -69,6 +74,6 @@ public class IncomingControllerImpl implements IncomingController {
         Scanner sc = new Scanner(System.in);
         IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
         //incomingControllerImpl.approveIncoming("10");
-        incomingControllerImpl.requestIncoming("1");
+        incomingControllerImpl.requestIncoming("2");
     }
 }

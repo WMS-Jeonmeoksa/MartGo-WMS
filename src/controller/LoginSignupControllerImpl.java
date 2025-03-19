@@ -182,7 +182,7 @@ public class LoginSignupControllerImpl implements LoginSignupController {
             break;
         }
 
-        UserDTO user = new UserDTO(id,name,password,phone,email,address,"회원","0"); //아직admin_id를 모르니깐 0으로 입력
+        UserDTO user = new UserDTO(id,name,password,phone,email,address,"회원",null); //아직admin_id를 모르니깐 0으로 입력
 
         boolean result = service.signUpUser(user);
         if (result) {

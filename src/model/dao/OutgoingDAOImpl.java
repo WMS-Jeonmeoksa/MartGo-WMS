@@ -96,6 +96,44 @@ public class OutgoingDAOImpl implements OutgoingDAO {
     }
 
     @Override
+    public List<OutgoingDTO> getOutgoingByStatusNext(String adminId, String status) {
+        List<OutgoingDTO> outgoingDTOList = new ArrayList<>();
+
+        String sql = new StringBuilder()
+                .append("SELECT o.* ")
+                .append("FROM outgoing o ")
+                .append("JOIN user u ON(o.user_id = u.user_id) ")
+                .append("JOIN admin a ON (u.admin_id = a.admin_id) ")
+                .append("WHERE u.admin_id IN ")
+                .append("(SELECT admin_id FROM admin WHERE warehouse_id = ")
+                .append("(SELECT warehouse_id FROM admin WHERE admin_id = ?) ")
+                .append("AND role = '창고관리자') ")
+                .append("AND status = ?").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, adminId);
+            ps.setString(2, status);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OutgoingDTO outgoingDTO = OutgoingDTO.builder()
+                        .outgoingNum(rs.getInt("outgoing_num"))
+                        .count(rs.getInt("count"))
+                        .outgoingDate(rs.getDate("outgoing_date"))
+                        .status(rs.getString("status"))
+                        .userId(rs.getString("user_id"))
+                        .stockNum(rs.getInt("stock_num")).build();
+                outgoingDTOList.add(outgoingDTO);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return outgoingDTOList;
+    }
+
+    @Override
     public void updateOutgoingStatus(int outgoingNum, String status) {
 
         String sql = "UPDATE outgoing SET status = ? WHERE outgoing_num = ?";

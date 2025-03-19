@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDAOImpl implements ProductDAO {
 
@@ -54,5 +56,36 @@ public class ProductDAOImpl implements ProductDAO {
             System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
         }
         return false;
+    }
+
+    @Override
+    public List<ProductDTO> getProductByUserId(String userId) {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        String sql = "SELECT * FROM product WHERE user_id = ?";
+
+        try {
+            Connection con = DbUtil.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                ProductDTO productDTO = new ProductDTO();
+                productDTO.setProductId(rs.getString("product_id"));
+                productDTO.setProductName(rs.getString("product_name"));
+                productDTO.setCategory(rs.getString("category"));
+                productDTO.setHeight(rs.getInt("height"));
+                productDTO.setWidth(rs.getInt("width"));
+                productDTO.setPrice(rs.getInt("price"));
+                productDTO.setManufacturer(rs.getString("manufacturer"));
+                productDTO.setUserId(rs.getString("user_id"));
+                productDTOList.add(productDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
+        }
+        return productDTOList;
     }
 }
