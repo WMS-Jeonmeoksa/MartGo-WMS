@@ -1,6 +1,6 @@
 package controller;
 
-import model.dao.RentDaoImpl;
+import model.dao.RentDAOImpl;
 import model.dto.RentHistoryDTO;
 import model.service.RentService;
 import model.service.RentServiceImpl;
@@ -11,15 +11,12 @@ public class RentControllerImpl implements RentController {
 
     RentService rentService = new RentServiceImpl();
     RentViewImpl rentView = new RentViewImpl();
-    RentDaoImpl rentDao = new RentDaoImpl();
+    RentDAOImpl rentDao = new RentDAOImpl();
     RentHistoryDTO rentHistory = new RentHistoryDTO();
 
 
-    public void handleRentRequest() {
-
-        int menu = rentView.displayMenu();
-        if (menu == 1) {
-            rentDao.getAllWarehouses();
+    public void ApplyRent(String userId) {
+         rentDao.getAllWarehouses();
             int wareHouse = rentView.getWareHouseChoice();
             rentDao.getAllSectors(wareHouse);
             String sectorName = rentView.getSectorChoice();
@@ -31,6 +28,7 @@ public class RentControllerImpl implements RentController {
             rentHistory.setSectorId(sectorName);
             rentHistory.setWarehouseId(wareHouse);
             rentHistory.setRentPrice(rentPrice);
+            rentHistory.setUserId(userId);
 
             String startDay = rentView.getStartDate();
             String endDate = rentService.endDate(month, startDay);
@@ -39,18 +37,23 @@ public class RentControllerImpl implements RentController {
             rentView.rentEnd();
 
 
-        } else if (menu == 2) {
+        }
+
+        public void HoldRentList() {
             rentView.displayHoldRentHistory();
-            RentDaoImpl.getHoldRentHistory();
+            RentDAOImpl.getHoldRentHistory();
             int selectRentNum = rentView.selectRentHistory();
             int adminId = 123;   // 관리자 아이디 받아야됨
-            RentDaoImpl.updateAdminId(selectRentNum, adminId);
-        } else if (menu == 3) {
-            rentView.displayHoldRentHistory();
-            RentDaoImpl.getinProgressRentHistory();
-            int selectRentNum = rentView.selectRentHistory();
-            rentDao.completedRentStatus(selectRentNum);
+            RentDAOImpl.updateAdminId(selectRentNum, adminId);
 
         }
-    }
+
+     public void inProgressRentList() {
+         rentView.displayHoldRentHistory();
+         RentDAOImpl.getinProgressRentHistory();
+         int selectRentNum = rentView.selectRentHistory();
+         rentDao.completedRentStatus(selectRentNum);
+
+     }
+
 }
