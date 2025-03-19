@@ -2,6 +2,7 @@ package controller;
 
 import common.constants.ErrorCode;
 import model.dto.IncomingDTO;
+import model.dto.ProductDTO;
 import model.service.IncomingService;
 import model.service.IncomingServiceImpl;
 
@@ -20,6 +21,10 @@ public class IncomingControllerImpl implements IncomingController {
     @Override
     public void requestIncoming(String userId) {
         System.out.println(INPUT_INCOMING_TITLE.getMessage());
+        List<ProductDTO> productDTOList = incomingService.getProductByUserId(userId);
+        for (ProductDTO productDTO : productDTOList) {
+            System.out.println(productDTO);
+        }
         System.out.println(INPUT_INCOMING_PRODUCT_ID.getMessage());
         String productId = sc.nextLine();
         System.out.println(INPUT_INCOMING_COUNT.getMessage());
@@ -51,7 +56,6 @@ public class IncomingControllerImpl implements IncomingController {
     @Override
     public void approveIncoming(String adminId) {
         String role = incomingService.getAdminRoleById(adminId);
-        System.out.println(adminId + " " + role);
         List<IncomingDTO> incomingDTOList = incomingService.getIncomingByRole(adminId, role);
         if (incomingDTOList == null || incomingDTOList.isEmpty()) {
             System.out.println(NO_INCOMING_LIST.getMessage());
@@ -66,10 +70,10 @@ public class IncomingControllerImpl implements IncomingController {
         incomingService.approveIncoming(adminId, incomingNum, role);
     }
 
-//    public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-//        IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
-//        //incomingControllerImpl.approveIncoming("10");
-//        incomingControllerImpl.requestIncoming("1");
-//    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
+        //incomingControllerImpl.approveIncoming("10");
+        incomingControllerImpl.requestIncoming("2");
+    }
 }
