@@ -5,6 +5,12 @@ import model.dto.UserDto;
 import java.util.Scanner;
 
 public class UserController {
+    IncomingController incomingController;
+    OutgoingController outgoingController;
+    RentController rentController;
+    StockControllerImpl stockController;
+    ProductControllerImpl productController;
+    LoginsignupController loginsignupController;
 
     private Scanner scan = new Scanner(System.in);
     private String userId = null;
@@ -16,14 +22,12 @@ public class UserController {
             System.out.println("1. 내 정보 보기");
             System.out.println("2. 임대신청");
             System.out.println("3. 로그아웃");
-//            System.out.println("4. 로그인된 아이디보기");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
             switch (choice){
                 case 1:
                     showInfo(user);
-                    LoginsignupController loginsignupController = new LoginsignupController();
                     loginsignupController.userIdReturn();
                     break;
                 case 2:
@@ -33,9 +37,6 @@ public class UserController {
                     logout();
                     loggedIn = false;
                     break;
-//                case 4:
-//                    checkCurrentLogin();
-//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
 
@@ -54,7 +55,6 @@ public class UserController {
             System.out.println("4. 출고");
             System.out.println("5. 재고 조회");
             System.out.println("6. 로그아웃");
-//            System.out.println("7. 로그인된 아이디보기");
             System.out.print("선택 > ");
 
             int choice = Integer.parseInt(scan.nextLine());
@@ -65,24 +65,21 @@ public class UserController {
                     showInfo(user);
                     break;
                 case 2:
-                    addProduct();
+                    productController.registerProduct(user.getUserId());
                     break;
                 case 3:
-                    receiveStock();
+                    incomingController.requestIncoming(user.getUserId());
                     break;
                 case 4:
-                    dispatchStock();
+                    outgoingController.requestOutgoing(user.getUserId());
                     break;
                 case 5:
-                    checkInventory();
+                    stockController.printUserStock(user.getUserId());
                     break;
                 case 6:
                     logout();
                     loggedIn = false;
                     break;
-//                case 7:
-//                    checkCurrentLogin();
-//                    break;
                 default:
                     System.out.println("잘못된 선택입니다.");
             }
