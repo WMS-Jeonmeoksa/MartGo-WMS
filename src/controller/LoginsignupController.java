@@ -10,7 +10,8 @@ public class LoginsignupController {
     private Scanner scan = new Scanner(System.in);
     private UserController memberController = new UserController();
     private AdminController adminController = new AdminController();
-String userId;
+    private UserDto userDto;
+    private AdminDto adminDto;
     // 메인 메뉴
     public void start() {
         while (true) {
@@ -63,16 +64,19 @@ String userId;
         AdminDto admin = service.loginAdmin(id, password);
 
         if(user != null){
+
             switch (user.getRole()) {
                 case "회원":
+                    this.userDto = user;
                     System.out.println("\n회원 로그인 성공! " + user.getUserName() + "님 환영합니다.");
                     memberController.memberMenu(user);
-                    userIdReturn(id, password);// 로그인시 유저리턴에 저장
+                    userIdReturn();// 로그인시 유저리턴에 저장
                     return;
                 case "거래처":
+                    this.userDto = user;
                     System.out.println("\n회원(거래처) 로그인 성공! " + user.getUserName() + "님 환영합니다.");
                     memberController.memberCustomerMenu(user);
-                    userIdReturn(id, password);// 로그인시 유저리턴에 저장
+                    userIdReturn();// 로그인시 유저리턴에 저장
                     return;
             }
         }
@@ -81,14 +85,16 @@ String userId;
         if(admin != null) {
             switch (admin.getRole()) {
                 case "창고관리자" :
+                    this.adminDto = admin;
                     System.out.println("\n관리자(창고관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
                     adminController.warehouseAdminMenu(admin);
-                    adminIdReturn(id, password);// 로그인시 관리자리턴에 저장
+                    adminIdReturn();// 로그인시 관리자리턴에 저장
                     return;
                 case "총관리자" :
+                    this.adminDto = admin;
                     System.out.println("\n관리자(총관리자) 로그인 성공! " + admin.getAdminName() + "님 환영합니다");
                     adminController.superAdminMenu(admin);
-                    adminIdReturn(id, password);// 로그인시 관리자리턴에 저장
+                    adminIdReturn();// 로그인시 관리자리턴에 저장
                     return;
             }
         }
@@ -176,7 +182,7 @@ String userId;
             break;
         }
 
-        UserDto user = new UserDto(id,name,password,phone,email,address,"",0); //아직admin_id를 모르니깐 0으로 입력
+        UserDto user = new UserDto(id,name,password,phone,email,address,"회원","0"); //아직admin_id를 모르니깐 0으로 입력
 
         boolean result = service.signUpUser(user);
         if (result) {
@@ -187,13 +193,19 @@ String userId;
     }
 
     // user아이디 반환메서드
-    public String userIdReturn(String id,  String password) {
-        return service.getUserIdAfterLogin(id,password);
+    public String userIdReturn() {
+        if(userDto == null) {
+            return null;
+        }
+        return userDto.getUserId();
     }
 
     // admin아이디 반환메서드
-    public  String adminIdReturn(String id, String password) {
-        return service.getAdminIdAfterLogin(id,password);
+    public  String adminIdReturn() {
+        if(adminDto == null) {
+            return null;
+        }
+        return adminDto.getAdminId();
     }
 
 
