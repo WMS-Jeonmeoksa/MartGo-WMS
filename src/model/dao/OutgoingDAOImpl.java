@@ -15,7 +15,7 @@ public class OutgoingDAOImpl implements OutgoingDAO {
     public List<StockDTO> getStockByUserId(String userId) {
         List<StockDTO> stockDTOList = new ArrayList<>();
 
-        String sql = "SELECT * FROM stock WHERE userid = ?";
+        String sql = "SELECT * FROM stock WHERE user_id = ?";
 
         try {
             Connection conn = DbUtil.getConnection();
@@ -50,7 +50,7 @@ public class OutgoingDAOImpl implements OutgoingDAO {
             Connection connection = DbUtil.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, outgoingDTO.getCount());
-            ps.setDate(2, (Date) outgoingDTO.getOutgoingDate());
+            ps.setDate(2, new java.sql.Date(outgoingDTO.getOutgoingDate().getTime()));
             ps.setString(3, outgoingDTO.getStatus());
             ps.setString(4, outgoingDTO.getUserId());
             ps.setInt(5, outgoingDTO.getStockNum());
@@ -63,15 +63,20 @@ public class OutgoingDAOImpl implements OutgoingDAO {
     }
 
     @Override
-    public List<OutgoingDTO> getOutgoingByStatus(String status) {
+    public List<OutgoingDTO> getOutgoingByStatus(String adminId, String status) {
         List<OutgoingDTO> outgoingDTOList = new ArrayList<>();
 
-        String sql = "SELECT * FROM outgoing WHERE status = ?";
+        String sql = new StringBuilder()
+                .append("SELECT o.* ")
+                .append("FROM outgoing o ")
+                .append("JOIN user u ON(o.user_id = u.user_id) ")
+                .append("WHERE u.admin_id = ? AND o.status = ? ").toString();
 
         try {
             Connection conn = DbUtil.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, status);
+            ps.setString(1, adminId);
+            ps.setString(2, status);
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -105,6 +110,31 @@ public class OutgoingDAOImpl implements OutgoingDAO {
             e.printStackTrace();
             System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
         }
+    }
+
+    @Override
+    public String getAdminIdByOutgoingNum(int outgoingNum) {
+
+        String sql = new StringBuilder()
+                .append("SELECT u.admin_id ")
+                .append("FROM outgoing o ")
+                .append("JOIN user u ON(o.user_id = u.user_id) ")
+                .append("WHERE o.outgoing_num = ? ").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, outgoingNum);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("admin_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
+        }
+        return null;
     }
 }
 

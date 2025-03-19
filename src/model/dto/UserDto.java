@@ -13,7 +13,7 @@ public class UserDto {
     private String email;
     private String address;
     private String role; // 회원 또는 거래처
-    private int admin_id;
+    private String admin_id;
 
     public UserDto() {
     }

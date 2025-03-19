@@ -8,6 +8,6 @@ import java.util.List;
 public interface OutgoingService {
     List<StockDTO> showStockByUserId(String userId);
     void requestOutgoing(OutgoingDTO outgoingDTO);
-    List<OutgoingDTO> getOutgoingByRole(String role);
-    void approveOutgoing(int outgoingNum, String role);
+    List<OutgoingDTO> getOutgoingByRole(String adminId, String role);
+    void approveOutgoing(String adminId, int outgoingNum, String role);
 }
