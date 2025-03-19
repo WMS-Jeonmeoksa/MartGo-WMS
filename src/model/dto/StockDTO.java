@@ -10,9 +10,8 @@ public class StockDTO {
     Integer stock_num;
     Integer count;
     Integer total_price;
-    String admin_id;
+    String user_id;
     String product_id;
-    Integer incoming_num;
     String sector_id;
     Integer warehouse_id;
 
@@ -25,9 +24,8 @@ public class StockDTO {
         Integer stock_num;
         Integer count;
         Integer total_price;
-        String admin_id;
+        String user_id;
         String product_id;
-        Integer incoming_num;
         String sector_id;
         Integer warehouse_id;
 
@@ -43,16 +41,12 @@ public class StockDTO {
             this.total_price = total_price;
             return this;
         }
-        public StockDTOBuilder admin_id(String admin_id) {
-            this.admin_id = admin_id;
+        public StockDTOBuilder user_id(String user_id) {
+            this.user_id = user_id;
             return this;
         }
         public StockDTOBuilder product_id(String product_id) {
             this.product_id = product_id;
-            return this;
-        }
-        public StockDTOBuilder incoming_num(Integer incoming_num) {
-            this.incoming_num = incoming_num;
             return this;
         }
         public StockDTOBuilder sector_id(String sector_id) {
@@ -69,9 +63,8 @@ public class StockDTO {
             stockDTO.stock_num = stock_num;
             stockDTO.count = count;
             stockDTO.total_price = total_price;
-            stockDTO.admin_id = admin_id;
+            stockDTO.user_id = user_id;
             stockDTO.product_id = product_id;
-            stockDTO.incoming_num = incoming_num;
             stockDTO.sector_id = sector_id;
             stockDTO.warehouse_id = warehouse_id;
             return stockDTO;

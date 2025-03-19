@@ -3,10 +3,7 @@ package model.dao;
 import common.utils.DbUtil;
 import model.dto.RentHistoryDTO;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class RentDaoImpl implements RentDao {
 
@@ -48,6 +45,92 @@ public class RentDaoImpl implements RentDao {
             cstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void getHoldRentHistory() {
+        String sql = "{CALL GetHoldRentHistory()}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int rentNum = rs.getInt("rent_num");
+                String sectorId = rs.getString("sector_id");
+                int warehouseId = rs.getInt("warehouse_id");
+                String userId = rs.getString("user_id");
+                Date rentStartDate = rs.getDate("rent_start_date");
+                Date rentEndDate = rs.getDate("rent_end_date");
+                int rentPrice = rs.getInt("rent_price");
+                String status = rs.getString("status");
+
+                System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
+                        ", 창고: " + warehouseId + ", 회원ID: " + userId +
+                        ", 임대 시작일: " + rentStartDate + ", 임대 종료일: " + rentEndDate +
+                        ", 임대료: " + rentPrice + ", 상태: " + status);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateAdminId(int rentNum, int adminId) {
+        String sql = "{CALL UpdateAdminId(?, ?)}";
+
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);)
+        {
+            stmt.setInt(1, rentNum);
+            stmt.setInt(2, adminId);
+
+            stmt.executeUpdate();
+
+            System.out.println("Admin ID 업데이트 완료.");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void getinProgressRentHistory() {
+        String sql = "{CALL GetinProgressRentHistory()}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int rentNum = rs.getInt("rent_num");
+                String sectorId = rs.getString("sector_id");
+                int warehouseId = rs.getInt("warehouse_id");
+                String userId = rs.getString("user_id");
+                Date rentStartDate = rs.getDate("rent_start_date");
+                Date rentEndDate = rs.getDate("rent_end_date");
+                int rentPrice = rs.getInt("rent_price");
+                String status = rs.getString("status");
+                int adminId = rs.getInt("admin_id");
+
+                System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
+                        ", 창고: " + warehouseId + ", 회원ID: " + userId +
+                        ", 임대 시작일: " + rentStartDate + ", 임대 종료일: " + rentEndDate +
+                        ", 임대료: " + rentPrice + ", 상태: " + status + ", 창고관리자ID: " + adminId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void completedRentStatus(int rentNum) {
+        String sql = "{CALL CompletedRentStatus(?)}";
+
+        try (CallableStatement stmt = DbUtil.getConnection().prepareCall(sql)) {
+            stmt.setInt(1, rentNum);
+            stmt.executeUpdate();
+            System.out.println("임대 번호 " + rentNum + "의 상태가 '완료'로 변경되었습니다.");
+        } catch (SQLException e) {
+            throw new RuntimeException("임대 상태 업데이트 중 오류 발생: " + e.getMessage(), e);
         }
     }
 

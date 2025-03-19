@@ -18,7 +18,18 @@ public enum MessageEnum {
     INCOMING_REQUEST_SUCCESS("입고요청이 성공적으로 완료되었습니다."),
     NO_INCOMING_LIST("요청된 입고신청이 없습니다."),
     INPUT_INCOMING_APPROVE("승인할 입고번호를 입력하세요."),
-    INCOMING_APPROVE_SUCCESS("입고요청을 성공적으로 승인하였습니다.");
+    INCOMING_APPROVE_SUCCESS("입고요청을 성공적으로 승인하였습니다."),
+
+    INPUT_OUTGOING_TITLE("\n====== 출고신청 ======"),
+    SHOW_STOCK_TITLE("\n========== 재고 목록 =========="),
+    INPUT_OUTGOING_STOCK_NUM("출고할 재고 번호를 입력하세요."),
+    INPUT_OUTGOING_COUNT("출고할 물품의 개수를 입력하세요."),
+    INPUT_OUTGOING_DATE("출고할 날짜를 입력하세요. (YYYY-MM-DD)"),
+    NO_OUTGOING_LIST("요청된 출고신청이 없습니다."),
+    INPUT_OUTGOING_APPROVE("승인할 출고번호를 입력하세요."),
+    OUTGOING_REQUEST_SUCCESS("출고요청이 성공적으로 완료되었습니다."),
+    OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다.");
+
 
     private final String message;
 

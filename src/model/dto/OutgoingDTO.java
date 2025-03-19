@@ -1,4 +1,3 @@
-
 package model.dto;
 
 import lombok.AllArgsConstructor;
@@ -9,14 +8,14 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class IncomingDTO {
-    private int incomingNum;
+public class OutgoingDTO {
+    private int outgoingNum;
     private int count;
-    private Date incomingDate;
+    private Date outgoingDate;
     private String status;
-    private String productId;
     private String userId;
+    private int stockNum;
 }

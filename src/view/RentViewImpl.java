@@ -1,5 +1,6 @@
 package view;
 
+import model.dto.RentHistoryDTO;
 import java.util.Scanner;
 
 public class RentViewImpl {
@@ -8,9 +9,10 @@ public class RentViewImpl {
 
     public int displayMenu() {
         System.out.println("1. 임대신청");
+        System.out.println("2. 임대 신청 대기 목록");   // 관리자 메뉴에서만 보이도록 수정 예정
+        System.out.println("3. 임대 신청 진행중 목록");  // 총관리자만 사용할 수 있도록 수정 예정
         return sc.nextInt();
     }
-
 
     public int getWareHouseChoice() {
         System.out.println("창고 목록");
@@ -18,6 +20,7 @@ public class RentViewImpl {
         System.out.print("원하는 창고번호를 선택하세요: ");
         return sc.nextInt();
     }
+
     public String getSectorChoice(int wareHouse) {
         System.out.println("\n섹터 목록");
         System.out.println("1. A섹터 |  2. B섹터 |  3. C섹터 | 4. D섹터");
@@ -40,12 +43,12 @@ public class RentViewImpl {
         return sc.nextInt();
     }
 
-    public void displaySelection(int wareHouse, String sectorName, int month, int rentPrice) {
+    public void displaySelection(RentHistoryDTO rentHistory, int month) {
         System.out.println("\n========선택 내역==========");
-        System.out.println("창고 이름 : " + wareHouse + "번 창고");
-        System.out.println("섹터 이름 : " + sectorName);
+        System.out.println("창고 이름 : " + rentHistory.getWarehouseId() + "번 창고");
+        System.out.println("섹터 이름 : " + rentHistory.getSectorId());
         System.out.println("임대 기간 : " + month + "개월");
-        System.out.println("임대 비용 : " + rentPrice + "만원");
+        System.out.println("임대 비용 : " + rentHistory.getRentPrice() + "만원");
     }
 
     public int confirmSelection() {
@@ -61,5 +64,15 @@ public class RentViewImpl {
 
     public void rentEnd() {
         System.out.println("임대 신청이 완료되었습니다.");
+    }
+
+    public void displayHoldRentHistory() {
+        System.out.println("===========대기중인 임대 신청 목록=============");
+    }
+
+
+    public int selectRentHistory() {
+        System.out.println("임대 신청을 진행시킬 임대번호를 선택하세요");
+        return sc.nextInt();
     }
 }

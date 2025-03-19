@@ -1,14 +1,13 @@
 package model.dao;
 
 import model.dto.StockDTO;
+import model.dto.StockHistoryDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface StockDAO {
-    <T> Optional<List<StockDTO>> checkStock(Integer user_id);
-    boolean incomingUpdateStock(int incoming_num);
-    boolean incomingUpdateStockHistory(int incoming_num);
-    boolean outgoingUpdateStock(int outgoing_num);
-    boolean outgoingUpdateStockHistory(int outgoing_num);
+    List<StockDTO> checkUserStock(String user_id);
+    List<StockDTO> checkAllStock(String admin_id);
+    List<StockHistoryDTO> checkStockHistoryList();
 }
