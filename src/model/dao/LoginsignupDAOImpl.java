@@ -1,8 +1,8 @@
 package model.dao;
 
 import common.utils.DbUtil;
-import model.dto.AdminDto;
-import model.dto.UserDto;
+import model.dto.AdminDTO;
+import model.dto.UserDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
 
     // 회원가입
     @Override
-    public boolean insertUser(UserDto user) throws SQLException {
+    public boolean insertUser(UserDTO user) throws SQLException {
         String sql = "{CALL InsertUser(?, ?, ?, ?, ?, ?, ?, ?)}";
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -35,8 +35,8 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
 
     // 회원 로그인
     @Override
-    public UserDto loginUser(String userId, String userPassword) {
-        UserDto user = null;
+    public UserDTO loginUser(String userId, String userPassword) {
+        UserDTO user = null;
         // 컬럼 이름은 테이블 정의에 맞춰 user_pw 사용
         String sql = "SELECT * FROM User WHERE user_id = ? AND user_pw = ?";
         try (Connection conn = DbUtil.getConnection();
@@ -45,7 +45,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             pstmt.setString(2, userPassword);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    user = new UserDto(
+                    user = new UserDTO(
                         rs.getString("user_id"),
                         rs.getString("user_name"),
                         rs.getString("user_pw"),
@@ -65,8 +65,8 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
 
     // 관리자 로그인
     @Override
-    public AdminDto loginAdmin(String adminId, String adminPassword) {
-        AdminDto admin = null;
+    public AdminDTO loginAdmin(String adminId, String adminPassword) {
+        AdminDTO admin = null;
         String sql = "SELECT * FROM Admin WHERE admin_id = ? AND admin_pw = ?";
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -74,7 +74,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             pstmt.setString(2, adminPassword);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    admin = new AdminDto(
+                    admin = new AdminDTO(
                             rs.getString("admin_id"),
                             rs.getString("admin_name"),
                             rs.getString("admin_pw"),
@@ -164,15 +164,15 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
     }
 
     // 특정 회원 정보를 가져오기
-    public UserDto getUserById(String userId){
-        UserDto user = null;
+    public UserDTO getUserById(String userId){
+        UserDTO user = null;
         String sql = "SELECT * FROM User WHERE user_id = ?";
         try (Connection conn = DbUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    user = new UserDto(
+                    user = new UserDTO(
                             rs.getString("user_id"),
                             rs.getString("user_name"),
                             rs.getString("user_pw"),

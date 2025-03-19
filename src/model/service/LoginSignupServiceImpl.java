@@ -1,18 +1,18 @@
 package model.service;
 
 import model.dao.LoginsignupDAOImpl;
-import model.dto.AdminDto;
-import model.dto.UserDto;
+import model.dto.AdminDTO;
+import model.dto.UserDTO;
 
 import java.sql.SQLException;
 
-public class LoginsignupServiceImpl implements LoginSignupService {
+public class LoginSignupServiceImpl implements LoginSignupService {
 
     private LoginsignupDAOImpl dao = new LoginsignupDAOImpl();
     // 회원가입 (User)
 
     @Override
-    public boolean signUpUser(UserDto user) {
+    public boolean signUpUser(UserDTO user) {
         try {
             return dao.insertUser(user); // insertUser()는 static 메서드이므로 Dao. 으로도 호출 가능
         } catch (SQLException e) {
@@ -23,15 +23,15 @@ public class LoginsignupServiceImpl implements LoginSignupService {
 
     // 회원 로그인
     @Override
-    public UserDto loginUser(String userid, String userPassword) {
-        UserDto resultUser =  dao.loginUser(userid, userPassword); // login 성공했을 때 UserDto 반환
+    public UserDTO loginUser(String userid, String userPassword) {
+        UserDTO resultUser =  dao.loginUser(userid, userPassword); // login 성공했을 때 UserDto 반환
         return resultUser;
     }
 
     // 관리자 로그인
     @Override
-    public AdminDto loginAdmin(String adminId, String adminPassword) {
-        AdminDto resultAdmin = dao.loginAdmin(adminId, adminPassword);
+    public AdminDTO loginAdmin(String adminId, String adminPassword) {
+        AdminDTO resultAdmin = dao.loginAdmin(adminId, adminPassword);
         return resultAdmin;
     }
 
