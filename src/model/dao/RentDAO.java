@@ -2,7 +2,7 @@ package model.dao;
 
 import model.dto.RentHistoryDTO;
 
-public interface RentDao {
+public interface RentDAO {
     int getRentPrice(int wareHouse, String sectorName, int month);
     void saveDb(RentHistoryDTO rentHistory);
 }
