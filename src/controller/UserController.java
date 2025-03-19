@@ -8,10 +8,11 @@ public class UserController {
 
     private Scanner scan = new Scanner(System.in);
     private String userId = null;
-    public void memberMenu(UserDto user){
+
+    public void memberMenu(UserDto user) {
         userId = user.getUserId();
         boolean loggedIn = true;
-        while(loggedIn){
+        while (loggedIn) {
             System.out.println("\n===== 회원 메뉴 =====");
             System.out.println("1. 내 정보 보기");
             System.out.println("2. 임대신청");
@@ -20,14 +21,15 @@ public class UserController {
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
-            switch (choice){
+            switch (choice) {
                 case 1:
                     showInfo(user);
                     LoginsignupController loginsignupController = new LoginsignupController();
                     loginsignupController.userIdReturn();
                     break;
                 case 2:
-                    applyForRental();
+                    RentControllerImpl rentController = new RentControllerImpl();
+                    rentController.handleRentRequest();
                     break;
                 case 3:
                     logout();
@@ -90,54 +92,56 @@ public class UserController {
     }
 
 
-        private void showInfo(UserDto user){
-            System.out.println("\n=== 내 정보 ===");
-            System.out.println("아이디: " + user.getUserId());
-            System.out.println("이름: " + user.getUserName());
-            System.out.println("전화번호: " + user.getPhone());
-            System.out.println("이메일: " + user.getEmail());
-            System.out.println("주소: " + user.getAddress());
-            System.out.println("권한: " + user.getRole());
-            System.out.println("담당 창고 관리자 ID: " + user.getAdmin_id());
-        }
+    private void showInfo(UserDto user) {
+        System.out.println("\n=== 내 정보 ===");
+        System.out.println("아이디: " + user.getUserId());
+        System.out.println("이름: " + user.getUserName());
+        System.out.println("전화번호: " + user.getPhone());
+        System.out.println("이메일: " + user.getEmail());
+        System.out.println("주소: " + user.getAddress());
+        System.out.println("권한: " + user.getRole());
+        System.out.println("담당 창고 관리자 ID: " + user.getAdmin_id());
+    }
 
 
     //일반회원
-    public void applyForRental(){
+    public void applyForRental() {
         System.out.println("임대 신청");
     }
 
     // 거래처
-    public void addProduct(){
+    public void addProduct() {
         System.out.println("제품 등록");
     }
-    public void receiveStock(){
+
+    public void receiveStock() {
         System.out.println("입고");
     }
-    public void dispatchStock(){
+
+    public void dispatchStock() {
         System.out.println("출고");
     }
-    public void checkInventory(){
+
+    public void checkInventory() {
         System.out.println("재고 조회");
     }
 
 
     // 로그인: 아이디와 비밀번호를 통해 회원 또는 관리자 로그인 후 전용 메뉴 진입
-        private void logout() {
-            System.out.println("\n로그아웃 되었습니다.");
-            userId = null; // 로그인 ID 초기화
-        }
+    private void logout() {
+        System.out.println("\n로그아웃 되었습니다.");
+        userId = null; // 로그인 ID 초기화
+    }
 
-        // 현재 로그인 id 확인 메서드
-        public void checkCurrentLogin() {
-            if (userId == null) {
-                System.out.println("현재 로그인된 사용자가 없습니다.");
-            }
-            else{
-                System.out.println("현재 로그인한 사용자 ID :" +  userId);
-            }
+    // 현재 로그인 id 확인 메서드
+    public void checkCurrentLogin() {
+        if (userId == null) {
+            System.out.println("현재 로그인된 사용자가 없습니다.");
+        } else {
+            System.out.println("현재 로그인한 사용자 ID :" + userId);
         }
     }
+}
 
 
 
