@@ -141,6 +141,18 @@ public class RentDAOImpl implements RentDAO {
         }
     }
 
+    public void updateUserAdminId() {
+
+        String sql = "{CALL updateUserAdminid()}";
+
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql);) {
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void updateAdminId(int rentNum, int adminId) {
         String sql = "{CALL UpdateAdminId(?, ?)}";
 

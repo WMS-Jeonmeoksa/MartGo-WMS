@@ -45,7 +45,7 @@ public class RentControllerImpl implements RentController {
             int selectRentNum = rentView.selectRentHistory();
             int adminId = 123;   // 관리자 아이디 받아야됨
             RentDAOImpl.updateAdminId(selectRentNum, adminId);
-
+            rentDao.updateUserAdminId();
         }
 
      public void inProgressRentList() {
