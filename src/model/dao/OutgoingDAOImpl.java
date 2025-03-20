@@ -174,5 +174,33 @@ public class OutgoingDAOImpl implements OutgoingDAO {
         }
         return null;
     }
+
+    @Override
+    public String getAdminIdByOutgoingNumNext(int outgoingNum) {
+
+        String sql = new StringBuilder()
+                .append("SELECT a.admin_id ")
+                .append("FROM admin a ")
+                .append("WHERE a.role = '총관리자' ")
+                .append("AND a.warehouse_id = (SELECT ad.warehouse_id FROM admin ad ")
+                .append("JOIN user u ON(ad.admin_id = u.admin_id) ")
+                .append("JOIN outgoing o ON(u.user_id = o.user_id) ")
+                .append("WHERE o.outgoing_num = ?) ").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, outgoingNum);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("admin_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
+        }
+        return null;
+    }
 }
 
