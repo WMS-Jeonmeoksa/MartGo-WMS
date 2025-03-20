@@ -1,6 +1,14 @@
 package common.utils;
 
+import common.constants.ErrorCode;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
+
 public class ValidationUtil {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     // 1️⃣ 아이디: 영어(대소문자) + 숫자만 가능, 최소 4자 이상, 최대 20자
     public static boolean isValidUserId(String userId) {
@@ -30,5 +38,37 @@ public class ValidationUtil {
     // 6️⃣ 주소: 한글 + 숫자만 가능 (도로명 주소 또는 지번 주소 형식)
     public static boolean isValidAddress(String address) {
         return address != null && address.matches("^[가-힣0-9\\s]+$");
+    }
+
+    // 0보다 큰 숫자
+    public static boolean isValidPositiveNumber(int number) {
+        return number > 0;
+    }
+
+    // 숫자만 입력가능하게 확인하는 메서드
+    public static int getValidPositiveNumber(String message) {
+        while (true) {
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.println(message);
+                int value = Integer.parseInt(sc.nextLine().trim());
+                if (!ValidationUtil.isValidPositiveNumber(value)) {
+                    System.out.println(ErrorCode.INVALID_NUMBER.getMessage());
+                } else {
+                    return value;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(ErrorCode.INVALID_NUMBER_FORMAT.getMessage());
+            }
+        }
+    }
+
+    public static Date isValidDate(String dateStr) {
+        try {
+            return DATE_FORMAT.parse(dateStr);
+        } catch (ParseException e) {
+            System.out.println(ErrorCode.INPUT_WRONG_DATE.getMessage());
+            return null;
+        }
     }
 }

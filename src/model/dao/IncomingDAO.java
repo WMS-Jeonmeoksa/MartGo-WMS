@@ -13,4 +13,5 @@ public interface IncomingDAO {
     String getAdminRoleById(String adminId);
     String getAdminIdByIncomingNum(int incomingNum);
     String getAdminIdByIncomingNumNext(int incomingNum);
+    String getUserIdByIncomingNum(int incomingNum);
 }

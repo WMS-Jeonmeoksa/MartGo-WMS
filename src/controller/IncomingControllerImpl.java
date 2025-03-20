@@ -1,6 +1,7 @@
 package controller;
 
 import common.constants.ErrorCode;
+import common.utils.ValidationUtil;
 import model.dto.IncomingDTO;
 import model.dto.ProductDTO;
 import model.service.IncomingService;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static common.constants.MessageEnum.*;
 
@@ -22,41 +24,44 @@ public class IncomingControllerImpl implements IncomingController {
     public void requestIncoming(String userId) {
         System.out.println(INPUT_INCOMING_TITLE.getMessage());
         List<ProductDTO> productDTOList = incomingService.getProductByUserId(userId);
+        System.out.println(SHOW_PRODUCT_LIST.getMessage());
         for (ProductDTO productDTO : productDTOList) {
             System.out.println(productDTO);
         }
         System.out.println(INPUT_INCOMING_PRODUCT_ID.getMessage());
         String productId = sc.nextLine();
-        System.out.println(INPUT_INCOMING_COUNT.getMessage());
-        int count = Integer.parseInt(sc.nextLine());
-        System.out.println(INPUT_INCOMING_DATE.getMessage());
-        String date = sc.nextLine();
+        int count = ValidationUtil.getValidPositiveNumber(INPUT_INCOMING_COUNT.getMessage());
 
         Date incomingDate = null;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            incomingDate = sdf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.out.println(ErrorCode.INPUT_WRONG_DATE.getMessage());
-            return;
+        while (incomingDate == null) {
+            System.out.println(INPUT_INCOMING_DATE.getMessage());
+            String date = sc.nextLine();
+            incomingDate = ValidationUtil.isValidDate(date);
         }
+        List<String> productIds = productDTOList.stream()
+                .map(ProductDTO::getProductId)
+                .collect(Collectors.toList());
 
-        IncomingDTO incomingDTO = IncomingDTO.builder()
-                .count(count)
-                .incomingDate(incomingDate)
-                .status("대기")
-                .productId(productId)
-                .userId(userId)
-                .build();
+        if (!productIds.contains(productId)) {
+            System.out.println(ErrorCode.NO_PRODUCT_INCOMING.getMessage());
+        } else {
+            IncomingDTO incomingDTO = IncomingDTO.builder()
+                    .count(count)
+                    .incomingDate(incomingDate)
+                    .status("대기")
+                    .productId(productId)
+                    .userId(userId)
+                    .build();
 
-        incomingService.requestIncoming(incomingDTO);
+            incomingService.requestIncoming(incomingDTO);
+        }
     }
 
     @Override
     public void approveIncoming(String adminId) {
         String role = incomingService.getAdminRoleById(adminId);
         List<IncomingDTO> incomingDTOList = incomingService.getIncomingByRole(adminId, role);
+        System.out.println(SHOW_INCOMING_LIST.getMessage());
         if (incomingDTOList == null || incomingDTOList.isEmpty()) {
             System.out.println(NO_INCOMING_LIST.getMessage());
             return;
@@ -73,7 +78,7 @@ public class IncomingControllerImpl implements IncomingController {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         IncomingControllerImpl incomingControllerImpl = new IncomingControllerImpl();
-        //incomingControllerImpl.approveIncoming("10");
-        incomingControllerImpl.requestIncoming("2");
+        //incomingControllerImpl.approveIncoming("9999");
+        incomingControllerImpl.requestIncoming("1111");
     }
 }
