@@ -18,4 +18,10 @@ public class OutgoingDTO {
     private String status;
     private String userId;
     private int stockNum;
+
+    @Override
+    public String toString() {
+        return String.format("| %-7d | %-6d | %-12s | %-6s | %-7s | %-7d |",
+                outgoingNum, count, outgoingDate, status, userId, stockNum);
+    }
 }

@@ -198,4 +198,28 @@ public class IncomingDAOImpl implements IncomingDAO {
         }
         return null;
     }
+
+    @Override
+    public String getUserIdByIncomingNum(int incomingNum) {
+
+        String sql = new StringBuilder()
+                .append("SELECT user_id ")
+                .append("FROM incoming ")
+                .append("WHERE incoming_num = ? ").toString();
+
+        try {
+            Connection conn = DbUtil.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, incomingNum);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("user_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(ErrorCode.DATABASE_ERROR.getMessage());
+        }
+        return null;
+    }
 }
