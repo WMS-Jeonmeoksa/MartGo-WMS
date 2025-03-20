@@ -34,9 +34,15 @@ java -jar target/MartGO.jar
 - MySQL을 통한 데이터 저장
 - 예외 처리 및 오류 로그 기록
 
+## 📌역할분담
+- 강창선(조장) : 재고, 재고변경, 산출물 관리
+- 방민영(팀원) : 로그인, 회원가입
+- 서민성(팀원) : 입고, 출고 프로세스, 제품 등록 시스템
+- 임성빈(팀원) : 임대 관리, 용적률 관리, 창고 및 섹터 생성
+
 ## 📂 프로젝트 구조
 ```sh
-📦 student-employee-management
+📦 MartGo
  ┣ 📂 src
  ┃ ┣ 📂 common
  ┃ ┃ ┣ 📂 config
