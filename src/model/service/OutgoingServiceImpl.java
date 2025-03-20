@@ -35,14 +35,20 @@ public class OutgoingServiceImpl implements OutgoingService {
 
     @Override
     public void approveOutgoing(String adminId, int outgoingNum, String role) {
-        if (adminId.equals(outgoingDAO.getAdminIdByOutgoingNum(outgoingNum))) {
+        String checkAdminId = null;
+        if (role.equals("창고관리자")) {
+            checkAdminId = outgoingDAO.getAdminIdByOutgoingNum(outgoingNum);
+        } else if (role.equals("총관리자")) {
+            checkAdminId = outgoingDAO.getAdminIdByOutgoingNumNext(outgoingNum);
+        }
+        if (checkAdminId != null && checkAdminId.equals(adminId)) {
             String newStatus = null;
             if (role.equals("창고관리자")) newStatus = "진행중";
             else if (role.equals("총관리자")) newStatus = "완료";
             outgoingDAO.updateOutgoingStatus(outgoingNum, newStatus);
-            System.out.println(MessageEnum.OUTGOING_APPROVE_SUCCESS.getMessage());
+            System.out.println(MessageEnum.INCOMING_APPROVE_SUCCESS.getMessage());
         } else {
-            System.out.println(ErrorCode.NO_OUTGOINGNUM_APPROVE.getMessage());
+            System.out.println(ErrorCode.NO_INCOMINGNUM_APPROVE.getMessage());
         }
     }
 }

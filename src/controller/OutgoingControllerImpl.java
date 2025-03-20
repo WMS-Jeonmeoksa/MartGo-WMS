@@ -28,6 +28,7 @@ public class OutgoingControllerImpl implements OutgoingController {
         System.out.println(SHOW_STOCK_TITLE.getMessage());
 
         List<StockDTO> stockDTOList = outgoingService.showStockByUserId(userId);
+        System.out.println(SHOW_STOCK_LIST.getMessage());
         for (StockDTO stockDTO : stockDTOList) {
             System.out.println(stockDTO);
         }
@@ -67,6 +68,7 @@ public class OutgoingControllerImpl implements OutgoingController {
             System.out.println(NO_OUTGOING_LIST.getMessage());
             return;
         }
+        System.out.println(SHOW_OUTGOING_LIST.getMessage());
         for (OutgoingDTO outgoingDTO : outgoingDTOList) {
             System.out.println(outgoingDTO);
         }
@@ -78,8 +80,8 @@ public class OutgoingControllerImpl implements OutgoingController {
 
     public static void main(String[] args) {
         OutgoingControllerImpl outgoingControllerImpl = new OutgoingControllerImpl();
-        Scanner sc = new Scanner(System.in);
-        //outgoingControllerImpl.requestOutgoing("1");
-        outgoingControllerImpl.approveOutgoing(sc.nextLine());
+        //Scanner sc = new Scanner(System.in);
+        //outgoingControllerImpl.requestOutgoing("1111");
+        outgoingControllerImpl.approveOutgoing("9999");
     }
 }

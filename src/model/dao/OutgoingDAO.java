@@ -12,4 +12,5 @@ public interface OutgoingDAO {
     List<OutgoingDTO> getOutgoingByStatusNext(String adminId, String status);
     void updateOutgoingStatus(int outgoingNum, String status);
     String getAdminIdByOutgoingNum(int outgoingNum);
+    String getAdminIdByOutgoingNumNext(int outgoingNum);
 }

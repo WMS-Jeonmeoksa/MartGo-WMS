@@ -4,8 +4,8 @@ import model.dto.ProductDTO;
 import model.service.ProductService;
 import model.service.ProductServiceImpl;
 
-import javax.swing.plaf.ListUI;
 import java.util.Scanner;
+import common.utils.ValidationUtil;
 
 import static common.constants.MessageEnum.*;
 
@@ -22,12 +22,9 @@ public class ProductControllerImpl implements ProductController {
         String productName = sc.nextLine();
         System.out.println(INPUT_PRODUCT_CATEGORY.getMessage());
         String category = sc.nextLine();
-        System.out.println(INPUT_PRODUCT_HEIGHT.getMessage());
-        int height = Integer.parseInt(sc.nextLine());
-        System.out.println(INPUT_PRODUCT_WIDTH.getMessage());
-        int width = Integer.parseInt(sc.nextLine());
-        System.out.println(INPUT_PRODUCT_PRICE.getMessage());
-        int price = Integer.parseInt(sc.nextLine());
+        int height = ValidationUtil.getValidPositiveNumber(INPUT_PRODUCT_HEIGHT.getMessage());
+        int width = ValidationUtil.getValidPositiveNumber(INPUT_PRODUCT_WIDTH.getMessage());
+        int price = ValidationUtil.getValidPositiveNumber(INPUT_PRODUCT_PRICE.getMessage());
         System.out.println(INPUT_PRODUCT_MANUFACTURER.getMessage());
         String manufacturer = sc.nextLine();
 
@@ -42,5 +39,8 @@ public class ProductControllerImpl implements ProductController {
                 .userId(userId).build();
 
         productService.registerProduct(productDTO);
+
+        System.out.println(SHOW_PRODUCT_LIST.getMessage());
+        System.out.println(productDTO);
     }
 }

@@ -12,4 +12,6 @@ public interface IncomingDAO {
     void updateIncomingStatus(int incomingNum, String status);
     String getAdminRoleById(String adminId);
     String getAdminIdByIncomingNum(int incomingNum);
+    String getAdminIdByIncomingNumNext(int incomingNum);
+    String getUserIdByIncomingNum(int incomingNum);
 }

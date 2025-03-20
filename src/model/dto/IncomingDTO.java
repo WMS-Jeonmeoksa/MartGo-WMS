@@ -19,4 +19,10 @@ public class IncomingDTO {
     private String status;
     private String productId;
     private String userId;
+
+    @Override
+    public String toString() {
+        return String.format("| %-7d | %-10s | %-10d | %-15s | %-7s | %-10s |",
+                incomingNum, productId, count, incomingDate, status, userId);
+    }
 }

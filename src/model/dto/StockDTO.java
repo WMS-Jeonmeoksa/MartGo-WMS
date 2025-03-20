@@ -69,5 +69,10 @@ public class StockDTO {
             stockDTO.warehouse_id = warehouse_id;
             return stockDTO;
         }
+        @Override
+        public String toString() {
+            return String.format("| %-5d | %-10s | %-6d | %-10d | %-10s | %-9s | %-10d |",
+                    stock_num, product_id, count, total_price, user_id, sector_id, warehouse_id);
+        }
     }
 }
