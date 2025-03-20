@@ -28,7 +28,11 @@ public enum MessageEnum {
     NO_OUTGOING_LIST("요청된 출고신청이 없습니다."),
     INPUT_OUTGOING_APPROVE("승인할 출고번호를 입력하세요."),
     OUTGOING_REQUEST_SUCCESS("출고요청이 성공적으로 완료되었습니다."),
-    OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다.");
+    OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다."),
+
+    NO_STOCK_LIST("해당 재고가 없습니다."),
+    NO_STOCK_HISTORY_LIST("해당 재고 이력이 없습니다.");
+
 
    /* INPUT_RENT_HISTORY_TITLE("\n====== 임대 신청 ======"),
     INPUT_WAREHOUSE("\"원하는 창고번호를 선택하세요: "),
