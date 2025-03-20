@@ -40,6 +40,17 @@ public class LoginSignupServiceImpl implements LoginSignupService {
 //        return dao.getUserbyId(userId); // 특정 회원 정보 조회
 //    }
     // 로그인 후 userID 반환
+
+    //회원 삭제
+    public boolean deleteUser(String userId) {
+        try {
+            return dao.deleteUser(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     public String getUserIdAfterLogin(String userId, String userPassword) {
         return dao.getUserIdByLogin(userId, userPassword); // 로그인 성공하면, ID 반환

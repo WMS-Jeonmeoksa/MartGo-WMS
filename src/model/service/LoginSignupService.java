@@ -15,4 +15,7 @@ public interface LoginSignupService {
     AdminDTO loginAdmin(String adminId, String adminPassword);
     // admin 아이디와 비밀번호를 받아 로그인 성공 시 관리자id만 반환
     String getAdminIdAfterLogin(String adminId, String adminPassword);
+    // 회원 삭제
+    boolean deleteUser(String userId);
+
 }
