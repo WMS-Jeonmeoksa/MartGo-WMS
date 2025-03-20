@@ -8,6 +8,8 @@ import model.dto.AdminDTO;
 import model.service.LoginSignupService;
 import model.service.LoginSignupServiceImpl;
 
+import static common.constants.MessageEnum.*;
+
 public class LoginSignupControllerImpl implements LoginSignupController {
     private LoginSignupService service = new LoginSignupServiceImpl();
     private Scanner scan = new Scanner(System.in);
@@ -18,12 +20,12 @@ public class LoginSignupControllerImpl implements LoginSignupController {
     // 메인 메뉴
     public void start() {
         while (true) {
-            System.out.println("----- 메인 메뉴 -----");
-            System.out.println("1. 현재 로그인 상태");
-            System.out.println("2. 로그인");
-            System.out.println("3. 회원가입");
-            System.out.println("4. 종료");
-            System.out.print("선택 > ");
+            System.out.println(MAIN_MENU.getMessage());
+            System.out.println(MAIN_NOW_STATUS.getMessage());
+            System.out.println(MAIN_LOGIN.getMessage());
+            System.out.println(MAIN_SIGNUP.getMessage());
+            System.out.println(MAIN_EXIT.getMessage());
+            System.out.print(MAIN_CHOICE.getMessage());
             int choice = Integer.parseInt(scan.nextLine());
 
             switch (choice) {
@@ -37,10 +39,10 @@ public class LoginSignupControllerImpl implements LoginSignupController {
                     signUp();
                     break;
                 case 4:
-                    System.out.println("프로그램을 종료합니다.");
+                    System.out.println(MAIN_EXIT_MENU.getMessage());
                     return;
                 default:
-                    System.out.println("잘못된 입력입니다.");
+                    System.out.println(MAIN_INVALID_INPUT.getMessage());
             }
         }
     }
@@ -49,12 +51,12 @@ public class LoginSignupControllerImpl implements LoginSignupController {
     private void login() {
         String id;
         while (true) { // 아이디 입력 반복
-            System.out.print("아이디: ");
+            System.out.print(LOGIN_SIGNUP_ID.getMessage());
             id = scan.nextLine().trim();
 
             // 아이디 유효성 검사
             if (!ValidationUtil.isValidUserId(id)) {
-                System.out.println("아이디는 영어와 숫자만 사용 가능하며, 4~20자로 입력해야 합니다.");
+                System.out.println(LOGIN_SIGNUP_ID_CHECK.getMessage());
                 continue; // 아이디 다시 입력받기
             }
             break; // 유효한 아이디 입력되면 비밀번호 입력으로 넘어감
@@ -62,12 +64,12 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
         String password;
         while (true) { // 비밀번호 입력 반복
-            System.out.print("비밀번호: ");
+            System.out.print(LOGIN_SIGNUP_PASSWORD.getMessage());
             password = scan.nextLine().trim();
 
             // 비밀번호 유효성 검사
             if (!ValidationUtil.isValidPassword(password)) {
-                System.out.println("비밀번호는 영어와 숫자를 포함하며, 최소 8자 이상 입력해야 합니다.");
+                System.out.println(LOGIN_SIGNUP_PASSWORD_CHECK.getMessage());
                 continue; // 비밀번호 다시 입력받기
             }
             break; // 유효한 비밀번호 입력되면 로그인 시도
@@ -114,21 +116,21 @@ public class LoginSignupControllerImpl implements LoginSignupController {
         }
 
         // 최종 로그인 실패
-        System.out.println("\n로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
+        System.out.println(LOGIN_FAILED.getMessage());
     }
 
 
 
     // 회원가입 처리: 필수 입력값을 올바르게 받을 때까지 반복
     private void signUp() {
-        System.out.println("=== 회원가입 ===");
+        System.out.println(SIGNUP_MENU.getMessage());
 
         String id;
         while (true) {
-            System.out.print("아이디: ");
+            System.out.print(LOGIN_SIGNUP_ID.getMessage());
             id = scan.nextLine().trim();
             if (id.isEmpty() || !ValidationUtil.isValidUserId(id)) {
-                System.out.println("아이디는 영어와 숫자만 사용 가능하며, 4~20자로 입력해야 합니다.");
+                System.out.println(LOGIN_SIGNUP_ID_CHECK.getMessage());
                 continue;
             }
             break;
@@ -136,10 +138,10 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
         String name;
         while (true) {
-            System.out.print("이름: ");
+            System.out.print(SIGNUP_NAME.getMessage());
             name = scan.nextLine().trim();
             if (name.isEmpty() || !ValidationUtil.isValidName(name)) {
-                System.out.println("이름은 한글만 입력 가능하며, 2~10자로 입력해야 합니다.");
+                System.out.println(SIGNUP_NAME_CHECK.getMessage());
                 continue;
             }
             break;
@@ -148,10 +150,10 @@ public class LoginSignupControllerImpl implements LoginSignupController {
         // 비밀번호 입력
         String password;
         while (true) {
-            System.out.print("비밀번호 : ");
+            System.out.print(LOGIN_SIGNUP_PASSWORD.getMessage());
             password = scan.nextLine().trim();
             if (password.isEmpty() || !ValidationUtil.isValidPassword(password)) {
-                System.out.println("비밀번호는 영어와 숫자를 포함하며, 최소 8자 이상 입력해야 합니다.");
+                System.out.println(LOGIN_SIGNUP_PASSWORD_CHECK.getMessage());
                 continue;
             }
             break;
@@ -159,10 +161,10 @@ public class LoginSignupControllerImpl implements LoginSignupController {
         // 비밀번호 확인만 반복해서 입력받음
         String passwordcheck;
         while (true) {
-            System.out.print("비밀번호확인 : ");
+            System.out.print(SIGNUP_PASSWORD_CHECK.getMessage());
             passwordcheck = scan.nextLine().trim();
             if (!password.equals(passwordcheck)) {
-                System.out.println("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
+                System.out.println(SIGNUP_PASSWORD_CHECK_MESSAGE.getMessage());
                 continue;
             }
             break;
@@ -170,16 +172,16 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
         String phone;
         while (true) {
-            System.out.print("전화번호: ");
+            System.out.print(SIGNUP_PHONE.getMessage());
             phone = scan.nextLine().trim();
             if (phone.isEmpty() || !ValidationUtil.isValidPhone(phone)) {
-                System.out.println("전화번호는 11자리 숫자로 입력해야 합니다. (예: 01012345678)");
+                System.out.println(SIGNUP_PHONE_CHECK.getMessage());
                 continue;
             }
             break;
         }
 
-        System.out.print("이메일 (입력하지 않으면 null 처리 입력 예) test@mail.com): ");
+        System.out.print(SIGNUP_EMAIL.getMessage());
         String email = scan.nextLine().trim();
         if (email.isEmpty() || !ValidationUtil.isValidEmail(email)) {
             email = null;
@@ -187,10 +189,10 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
         String address;
         while (true) {
-            System.out.print("주소: ");
+            System.out.print(SIGNUP_ADDRESS.getMessage());
             address = scan.nextLine().trim();
             if (address.isEmpty() ||  !ValidationUtil.isValidAddress(address)) {
-                System.out.println("주소는 한글과 숫자만 포함해야 합니다.");
+                System.out.println(SIGNUP_ADDRESS_CHECK.getMessage());
                 continue;
             }
             break;
@@ -200,9 +202,9 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
         boolean result = service.signUpUser(user);
         if (result) {
-            System.out.println("회원가입 성공!");
+            System.out.println(SIGNUP_SUCCESS.getMessage());
         } else {
-            System.out.println("회원가입 실패!");
+            System.out.println(SIGNUP_FAIL.getMessage());
         }
     }
 
