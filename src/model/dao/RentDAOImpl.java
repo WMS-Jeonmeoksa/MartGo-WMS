@@ -20,7 +20,6 @@ public class RentDAOImpl implements RentDAO {
                 int height = rs.getInt("height");
                 int width = rs.getInt("width");
                 double far = rs.getDouble("FAR");
-
                 System.out.printf("창고 ID: %d, 창고 이름: %s, 창고 위치: %s, 창고 높이: %d, 창고 면적: %d, 창고 용적률: %.2f%n",
                         id, name, location, height, width, far);
             }
@@ -114,7 +113,7 @@ public class RentDAOImpl implements RentDAO {
         }
     }
 
-    public static void getHoldRentHistory() {
+    public void getHoldRentHistory() {
         String sql = "{CALL GetHoldRentHistory()}";
 
         try (Connection conn = DbUtil.getConnection();
@@ -140,6 +139,7 @@ public class RentDAOImpl implements RentDAO {
             e.printStackTrace();
         }
     }
+
     public void updateUserAdminId() {
 
         String sql = "{CALL updateUserAdminid()}";
@@ -152,7 +152,7 @@ public class RentDAOImpl implements RentDAO {
         }
     }
 
-    public static void updateAdminId(int rentNum, String adminId) {
+    public void updateAdminId(int rentNum, String adminId) {
         String sql = "{CALL UpdateAdminId(?, ?)}";
 
 
@@ -163,51 +163,66 @@ public class RentDAOImpl implements RentDAO {
 
             stmt.executeUpdate();
 
-            System.out.println("Admin ID 업데이트 완료.");
+            System.out.println("임대 번호 " + rentNum + "의 상태가 '진행중'로 변경되었습니다.");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void getinProgressRentHistory() {
-        String sql = "{CALL GetinProgressRentHistory()}";
+    public void getInProgressRentHistory(String adminId) {
+        String sql = "{CALL GetInProgressRentHistory(?)}";
 
         try (Connection conn = DbUtil.getConnection();
-             CallableStatement stmt = conn.prepareCall(sql);
-             ResultSet rs = stmt.executeQuery()) {
+             CallableStatement stmt = conn.prepareCall(sql)) {
 
-            while (rs.next()) {
-                int rentNum = rs.getInt("rent_num");
-                String sectorId = rs.getString("sector_id");
-                int warehouseId = rs.getInt("warehouse_id");
-                String userId = rs.getString("user_id");
-                Date rentStartDate = rs.getDate("rent_start_date");
-                Date rentEndDate = rs.getDate("rent_end_date");
-                int rentPrice = rs.getInt("rent_price");
-                String status = rs.getString("status");
-                String adminId = rs.getString("admin_id");
+            stmt.setString(1, adminId);
 
-                System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
-                        ", 창고: " + warehouseId + ", 회원ID: " + userId +
-                        ", 임대 시작일: " + rentStartDate + ", 임대 종료일: " + rentEndDate +
-                        ", 임대료: " + rentPrice + ", 상태: " + status + ", 창고관리자ID: " + adminId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                boolean dataFound = false;
+                while (rs.next()) {
+                    int rentNum = rs.getInt("rent_num");
+                    String sectorId = rs.getString("sector_id");
+                    int warehouseId = rs.getInt("warehouse_id");
+                    String userId = rs.getString("user_id");
+                    Date rentStartDate = rs.getDate("rent_start_date");
+                    Date rentEndDate = rs.getDate("rent_end_date");
+                    int rentPrice = rs.getInt("rent_price");
+                    String status = rs.getString("status");
+
+                    System.out.println("임대번호: " + rentNum + ", 섹터: " + sectorId +
+                            ", 창고: " + warehouseId + ", 회원ID: " + userId +
+                            ", 임대 시작일: " + rentStartDate + ", 임대 종료일: " + rentEndDate +
+                            ", 임대료: " + rentPrice + ", 상태: " + status);
+
+                    dataFound = true;
+                }
+                if (!dataFound) {
+                    System.out.println("진행중인 임대 기록이 없습니다.");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void completedRentStatus(int rentNum) {
-        String sql = "{CALL CompletedRentStatus(?)}";
+    public void completedRentStatus(int rentNum, String adminId) {
+        String sql = "{CALL CompletedRentStatus(?, ?)}";
 
-        try (CallableStatement stmt = DbUtil.getConnection().prepareCall(sql)) {
+        try (Connection conn = DbUtil.getConnection();
+             CallableStatement stmt = conn.prepareCall(sql)) {
+
             stmt.setInt(1, rentNum);
-            stmt.executeUpdate();
+            stmt.setString(2, adminId);
+
+            stmt.executeUpdate();  // 프로시저 실행
             System.out.println("임대 번호 " + rentNum + "의 상태가 '완료'로 변경되었습니다.");
+
         } catch (SQLException e) {
-            throw new RuntimeException("임대 상태 업데이트 중 오류 발생: " + e.getMessage(), e);
+            throw new RuntimeException(e);
         }
+
     }
 
 }
+
