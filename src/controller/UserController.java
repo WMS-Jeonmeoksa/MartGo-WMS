@@ -11,4 +11,8 @@ public interface UserController {
 
     // 현재 로그인한 사용자 ID 확인
     void checkCurrentLogin();
+
+    // 회원 탈퇴(삭제) 기능.
+    void deleteUser(UserDTO user);
+
 }

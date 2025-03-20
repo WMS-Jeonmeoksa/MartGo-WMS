@@ -1,6 +1,8 @@
 package controller;
 
 import model.dto.UserDTO;
+import model.service.LoginSignupService;
+import model.service.LoginSignupServiceImpl;
 
 import java.util.Scanner;
 
@@ -13,6 +15,8 @@ public class UserControllerImpl implements UserController {
 
     private Scanner scan = new Scanner(System.in);
     private String userId = null;
+    private UserDTO userDto;
+    private LoginSignupService service = new LoginSignupServiceImpl();
 
     @Override
     public void memberMenu(UserDTO user) {
@@ -23,6 +27,7 @@ public class UserControllerImpl implements UserController {
             System.out.println("1. 내 정보 보기");
             System.out.println("2. 임대신청");
             System.out.println("3. 로그아웃");
+            System.out.println("4. 회원 탈퇴");
             System.out.print("선택 > ");
             int choice = Integer.parseInt(scan.nextLine());
 
@@ -38,6 +43,12 @@ public class UserControllerImpl implements UserController {
                 case 3:
                     logout();
                     loggedIn = false;
+                    break;
+                case 4:
+                    deleteUser(user);
+                    if (userId == null) {
+                        loggedIn = false;
+                    }
                     break;
                 default:
                     System.out.println("잘못된 선택입니다.");
@@ -83,6 +94,11 @@ public class UserControllerImpl implements UserController {
                     logout();
                     loggedIn = false;
                     break;
+                case 7:
+                    deleteUser(user);
+                    if (userId == null) {
+                        loggedIn = false;
+                    }
                 default:
                     System.out.println("잘못된 선택입니다.");
             }
@@ -100,6 +116,35 @@ public class UserControllerImpl implements UserController {
         System.out.println("권한: " + user.getRole());
         System.out.println("담당 창고 관리자 ID: " + user.getAdmin_id());
     }
+
+
+
+    @Override
+    public void deleteUser(UserDTO user) {
+        userId = user.getUserId();
+        if (userId == null) {
+            System.out.println("먼저 로그인 해주세요.");
+            return;
+        }
+
+        System.out.println("정말로 회원 탈퇴하시겠습니까? (Y/N): ");
+        String choice = scan.nextLine().trim();
+
+        if (choice.equalsIgnoreCase("Y")) {
+            boolean result = service.deleteUser(user.getUserId());
+            if (result) {
+                System.out.println("회원 탈퇴가 완료되었습니다.");
+                // 탈퇴 후 로그인 정보 삭제
+                userDto = null;
+                userId = null;
+            } else {
+                System.out.println("회원 탈퇴에 실패하였습니다.");
+            }
+        } else {
+            System.out.println("회원 탈퇴를 취소합니다.");
+        }
+    }
+
 
 
     // 로그인: 아이디와 비밀번호를 통해 회원 또는 관리자 로그인 후 전용 메뉴 진입

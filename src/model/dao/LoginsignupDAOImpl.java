@@ -190,6 +190,19 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
         return user;
     }
 
+    public boolean deleteUser(String userId) throws SQLException {
+        String sql = "DELETE FROM User WHERE user_id = ?";
+        try (Connection conn = DbUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
 
 
