@@ -28,20 +28,24 @@ public enum MessageEnum {
     NO_OUTGOING_LIST("요청된 출고신청이 없습니다."),
     INPUT_OUTGOING_APPROVE("승인할 출고번호를 입력하세요."),
     OUTGOING_REQUEST_SUCCESS("출고요청이 성공적으로 완료되었습니다."),
-    OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다.");
+    OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다."),
 
-   /* INPUT_RENT_HISTORY_TITLE("\n====== 임대 신청 ======"),
-    INPUT_WAREHOUSE("\"원하는 창고번호를 선택하세요: "),
+    INPUT_WAREHOUSE("원하는 창고번호를 선택하세요: "),
+    SHOW_WAREHOUSE_SECTOR_LIST("\n%d번 창고의 섹터 목록"),
     INPUT_SECTOR("원하는 섹터를 선택하세요: "),
-    INPUT_RENT_PERIOD1("\n======임대 기간 선택======"),
+    INPUT_RENT_PERIOD1("\n임대 기간 선택"),
     INPUT_RENT_PERIOD2("1개월 | 3개월 | 6개월 | 12개월"),
     INPUT_RENT_PERIOD3("원하는 임대기간을 입력하세요: "),
-    INPUT_RENT_START_DATE("원하는 임대 시작일을 입력하세요: 예) 2025-03-21"),
+    INPUT_RENT_START_DATE("원하는 임대 시작일을 입력하세요: 예) 2025-03-21\n"),
     SHOW_RENT_HISTORY_LAST("\n========최종 선택 내역=========="),
-    더 만들어야됨
-
-
-   */
+    RENT_WAREHOUSE("창고 이름 : %d번 창고"),
+    RENT_SECTOR("섹터 이름 : %s"),
+    RENT_PERIOD("임대 기간 : %s ~ %s"),
+    RENT_PRICE("임대 비용 : %d만원"),
+    CONFIRM_RENT("임대 신청 하시겠습니까? (1. 예 / 2. 아니오)"),
+    RENT_END("임대 신청이 완료되었습니다."),
+    SHOW_HOLD_RENT_HISTORY("\n===========대기중인 임대 신청 목록============="),
+    SELECT_RENT_HISTORY("임대 신청을 진행시킬 임대번호를 선택하세요: ");
 
     private final String message;
 

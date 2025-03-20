@@ -80,7 +80,7 @@ public class AdminControllerImpl implements AdminController {
                     viewAdminInfo(admin);
                     break;
                 case 2:
-                    rentController.inProgressRentList();
+                    rentController.inProgressRentList(adminId);
                     break;
                 case 3:
                     incomingController.approveIncoming(adminId);
