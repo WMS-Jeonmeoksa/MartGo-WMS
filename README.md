@@ -28,13 +28,13 @@ cd MartGO
 java -jar target/MartGO.jar
 ```
 
-📝 기능
+## 📝 기능
 ✔ 회원가입 / 로그인 기능
 ✔ WMS 시스템을 위한 임대, 입고, 출고 기능 구현
 ✔ MySQL을 통한 데이터 저장
 ✔ 예외 처리 및 오류 로그 기록
 
-📂 프로젝트 구조
+## 📂 프로젝트 구조
 📦 student-employee-management
  ┣ 📂 src
  ┃ ┣ 📂 common
@@ -50,5 +50,5 @@ java -jar target/MartGO.jar
  ┃ ┣ 📂 view
  ┗ 📜 README.md
 
-📜 라이선스
+## 📜 라이선스
 이 프로젝트는 신세계 I&C 6차수 3팀 전먹사에 의해 완성되었습니다.
