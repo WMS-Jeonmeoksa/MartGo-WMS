@@ -1,9 +1,11 @@
 package controller;
 
 import model.dto.AdminDTO;
-import model.dto.UserDTO;
+
 
 import java.util.Scanner;
+
+import static common.constants.MessageEnum.*;
 
 public class AdminControllerImpl implements AdminController {
     RentController rentController = new RentControllerImpl();
@@ -20,15 +22,15 @@ public class AdminControllerImpl implements AdminController {
         adminId = admin.getAdminId(); // 로그인한 관리자 ID 저장
         boolean loggedIn = true;
         while (loggedIn) {
-            System.out.println("\n===== 창고 관리자 메뉴 =====");
-            System.out.println("1. 내 정보 보기");
-            System.out.println("2. 대기중인 임대신청 목록");
-            System.out.println("3. 대기중인 입고신청 목록");
-            System.out.println("4. 대기중인 출고신청 목록");
-            System.out.println("5. 담당한 창고의 재고 목록");
-            System.out.println("6. 담당한 창고의 재고 변경 이력");
-            System.out.println("7. 로그아웃");
-            System.out.print("선택 > ");
+            System.out.println(WAREHOUSE_ADMIN_MENU.getMessage());
+            System.out.println(ADMIN_PAGE.getMessage());
+            System.out.println(WAREHOUSE_ADMIN_WAITING_RENT.getMessage());
+            System.out.println(WAREHOUSE_ADMIN_WAITING_OUTGOING.getMessage());
+            System.out.println(WAREHOUSE_ADMIN_WAITING_INCOMING.getMessage());
+            System.out.println(WAREHOUSE_ADMIN_STOCK.getMessage());
+            System.out.println(WAREHOUSE_ADMIN_STOCK_HISTORY.getMessage());
+            System.out.println(ADMIN_LOG_OUT.getMessage());
+            System.out.print(MAIN_CHOICE.getMessage());
             int choice = Integer.parseInt(scan.nextLine());
 
             switch (choice) {
@@ -55,7 +57,7 @@ public class AdminControllerImpl implements AdminController {
                     loggedIn = false;
                     break;
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(MAIN_INVALID_INPUT.getMessage());
             }
         }
     }
@@ -65,15 +67,15 @@ public class AdminControllerImpl implements AdminController {
         adminId = admin.getAdminId(); // 로그인한 관리자 ID
         boolean loggedIn = true;
         while (loggedIn) {
-            System.out.println("\n===== 총 관리자 메뉴 =====");
-            System.out.println("1. 관리자 정보 보기");
-            System.out.println("2. 진행중인 임대신청 목록");
-            System.out.println("3. 진행중인 입고신청 목록");
-            System.out.println("4. 진행중인 출고신청 목록");
-            System.out.println("5. 담당한 창고의 재고 목록");
-            System.out.println("6. 담당한 창고의 재고 변경 이력");
-            System.out.println("7. 로그아웃");
-            System.out.print("선택 > ");
+            System.out.println(SUPER_ADMIN_MENU.getMessage());
+            System.out.println(ADMIN_PAGE.getMessage());
+            System.out.println(SUPER_ADMIN_PROGRESS_RENT.getMessage());
+            System.out.println(SUPER_ADMIN_PROGRESS_OUTGING.getMessage());
+            System.out.println(SUPER_ADMIN_PROGRESS_INCOMING.getMessage());
+            System.out.println(SUPER_ADMIN_STOCK.getMessage());
+            System.out.println(SUPER_ADMIN_STOCK_HISTORY.getMessage());
+            System.out.println(ADMIN_LOG_OUT.getMessage());
+            System.out.print(MAIN_CHOICE.getMessage());
             int choice = Integer.parseInt(scan.nextLine());
             switch (choice) {
                 case 1:
@@ -100,7 +102,7 @@ public class AdminControllerImpl implements AdminController {
                     break;
 
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(MAIN_INVALID_INPUT.getMessage());
             }
         }
 
@@ -108,7 +110,7 @@ public class AdminControllerImpl implements AdminController {
 
     // 관리자 정보 보기 (공통)
     private void viewAdminInfo(AdminDTO admin) {
-        System.out.println("\n=== 관리자 정보 ===");
+        System.out.println(ADMIN_PAGE_COMMON.getMessage());
         System.out.println("아이디: " + admin.getAdminId());
         System.out.println("이름: " + admin.getAdminName());
         System.out.println("전화번호: " + admin.getPhone());
@@ -118,13 +120,13 @@ public class AdminControllerImpl implements AdminController {
     }
 
     private void logout() {
-        System.out.println("\n 로그아웃 되었습니다.");
+        System.out.println(LOG_OUT_MESSAGE.getMessage());
         adminId = null;
     }
 
     public void checkCurrentLogin() {
         if (adminId == null) {
-            System.out.println("현재 로그인된 관리자가 없습니다.");
+            System.out.println(NOW_ADMIN_LOGIN_STATUS.getMessage());
         } else {
             System.out.println("현재 로그인한 관리자 ID : " + adminId);
         }
