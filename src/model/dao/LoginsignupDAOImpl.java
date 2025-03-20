@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 
+
+import static common.constants.ErrorCode.*;
+
 public class LoginsignupDAOImpl implements  LoginsignupDAO {
 
     // 회원가입
@@ -29,6 +32,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
         }
         return false;
     }
@@ -59,6 +63,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
         }
         return user;
     }
@@ -87,6 +92,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
         }
         return admin;
     }
@@ -137,6 +143,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
         }
         catch (SQLException e){
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
         }
         return retrievedUserId; // 로그인 실패 시 null 반환
     }
@@ -159,6 +166,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
         }
         catch (SQLException e){
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
         }
         return retrievedUserId; // 로그인 실패 시 null 반환
     }
@@ -198,6 +206,7 @@ public class LoginsignupDAOImpl implements  LoginsignupDAO {
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(DATABASE_ERROR.getMessage());
             return false;
         }
     }
