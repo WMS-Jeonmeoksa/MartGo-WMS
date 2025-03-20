@@ -182,7 +182,6 @@ public class LoginSignupControllerImpl implements LoginSignupController {
         System.out.print("이메일 (입력하지 않으면 null 처리 입력 예) test@mail.com): ");
         String email = scan.nextLine().trim();
         if (email.isEmpty() || !ValidationUtil.isValidEmail(email)) {
-            System.out.println("올바른 이메일 형식이 아닙니다.");
             email = null;
         }
 
