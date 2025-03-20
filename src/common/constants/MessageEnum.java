@@ -30,6 +30,9 @@ public enum MessageEnum {
     OUTGOING_REQUEST_SUCCESS("출고요청이 성공적으로 완료되었습니다."),
     OUTGOING_APPROVE_SUCCESS("출고요청을 성공적으로 승인하였습니다."),
 
+    NO_STOCK_LIST("해당 재고가 없습니다."),
+    NO_STOCK_HISTORY_LIST("해당 재고 이력이 없습니다."),
+
     MAIN_MENU("----- 메인 메뉴 -----"),
     MAIN_NOW_STATUS("1. 현재 로그인 상태"),
     MAIN_LOGIN("2. 로그인"),
