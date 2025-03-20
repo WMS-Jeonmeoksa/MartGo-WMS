@@ -40,7 +40,22 @@ public class IncomingServiceImpl implements IncomingService{
 
     @Override
     public void approveIncoming(String adminId, int incomingNum, String role) {
-        if (adminId.equals(incomingDAO.getAdminIdByIncomingNum(incomingNum))) {
+//        if (adminId.equals(incomingDAO.getAdminIdByIncomingNum(incomingNum))) {
+//            String newStatus = null;
+//            if (role.equals("창고관리자")) newStatus = "진행중";
+//            else if (role.equals("총관리자")) newStatus = "완료";
+//            incomingDAO.updateIncomingStatus(incomingNum, newStatus);
+//            System.out.println(MessageEnum.INCOMING_APPROVE_SUCCESS.getMessage());
+//        } else {
+//            System.out.println(ErrorCode.NO_INCOMINGNUM_APPROVE.getMessage());
+//        }
+        String checkAdminId = null;
+        if (role.equals("창고관리자")) {
+            checkAdminId = incomingDAO.getAdminIdByIncomingNum(incomingNum);
+        } else if (role.equals("총관리자")) {
+            checkAdminId = incomingDAO.getAdminIdByIncomingNumNext(incomingNum);
+        }
+        if (checkAdminId != null && checkAdminId.equals(adminId)) {
             String newStatus = null;
             if (role.equals("창고관리자")) newStatus = "진행중";
             else if (role.equals("총관리자")) newStatus = "완료";
