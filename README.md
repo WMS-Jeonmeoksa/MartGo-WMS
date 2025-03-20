@@ -26,6 +26,7 @@ git clone https://github.com/username/project-name.git
 # 프로젝트 빌드 및 실행
 cd MartGO
 java -jar target/MartGO.jar
+```
 
 📝 기능
 ✔ 학생 및 직원 정보 등록, 수정, 삭제, 조회
