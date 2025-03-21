@@ -153,7 +153,7 @@ public enum MessageEnum {
     RENT_WAREHOUSE("창고 이름 : %d번 창고"),
     RENT_SECTOR("섹터 이름 : %s"),
     RENT_PERIOD("임대 기간 : %s ~ %s"),
-    RENT_PRICE("임대 비용 : %d만원"),
+    RENT_PRICE("임대 비용 : %d원"),
     CONFIRM_RENT("임대 신청 하시겠습니까? (1. 예 / 2. 아니오)"),
     RENT_END("임대 신청이 완료되었습니다."),
     SHOW_HOLD_RENT_HISTORY("\n===========대기중인 임대 신청 목록============="),
