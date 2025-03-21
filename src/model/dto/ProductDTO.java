@@ -22,7 +22,7 @@ public class ProductDTO {
 
     @Override
     public String toString() {
-        return String.format("| %-10s | %-15s | %-12s | %6d | %6d | %,10d | %-12s | %-10s |",
+        return String.format("| %-10s | %-20s | %-12s | %6d | %6d | %,10d | %-12s | %-10s |",
                 productId, productName, category, height, width, price,
                 manufacturer == null ? "N/A" : manufacturer, userId);
     }
