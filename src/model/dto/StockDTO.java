@@ -19,6 +19,11 @@ public class StockDTO {
         return new StockDTOBuilder();
     }
 
+    @Override
+    public String toString() {
+        return String.format("| %-5d | %-10s | %-6d | %-10d | %-10s | %-9s | %-10d |",
+                stock_num, product_id, count, total_price, user_id, sector_id, warehouse_id);
+    }
 
     public static class StockDTOBuilder {
         Integer stock_num;
@@ -28,6 +33,7 @@ public class StockDTO {
         String product_id;
         String sector_id;
         Integer warehouse_id;
+
 
         public StockDTOBuilder stock_num(Integer stock_num) {
             this.stock_num = stock_num;
@@ -69,10 +75,6 @@ public class StockDTO {
             stockDTO.warehouse_id = warehouse_id;
             return stockDTO;
         }
-        @Override
-        public String toString() {
-            return String.format("| %-5d | %-10s | %-6d | %-10d | %-10s | %-9s | %-10d |",
-                    stock_num, product_id, count, total_price, user_id, sector_id, warehouse_id);
-        }
+
     }
 }

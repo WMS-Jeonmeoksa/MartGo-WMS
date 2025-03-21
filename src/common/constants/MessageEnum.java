@@ -53,10 +53,9 @@ public enum MessageEnum {
     NO_STOCK_HISTORY_LIST("해당 재고 이력이 없습니다."),
 
     MAIN_MENU("----- 메인 메뉴 -----"),
-    MAIN_NOW_STATUS("1. 현재 로그인 상태"),
-    MAIN_LOGIN("2. 로그인"),
-    MAIN_SIGNUP("3. 회원가입"),
-    MAIN_EXIT("4. 종료"),
+    MAIN_LOGIN("1. 로그인"),
+    MAIN_SIGNUP("2. 회원가입"),
+    MAIN_EXIT("3. 종료"),
     MAIN_CHOICE("선택 > "),
     MAIN_EXIT_MENU("프로그램을 종료합니다."),
     MAIN_INVALID_INPUT("잘못된 입력입니다."),
@@ -85,6 +84,8 @@ public enum MessageEnum {
     USER_RENT_APPLICATION("2. 임대신청"),
     USER_LOG_OUT("3. 로그아웃"),
     USER_DELETE("4. 회원 탈퇴"),
+
+    USER_LOG_OUT_6("6. 로그아웃"),
 
     USER_CUSTOMER_MAIN_MENU("\n===== 거래처 메뉴 ====="),
     USER_CUSTOMER_PRODUCT("2. 제품 등록"),
@@ -153,7 +154,7 @@ public enum MessageEnum {
     RENT_WAREHOUSE("창고 이름 : %d번 창고"),
     RENT_SECTOR("섹터 이름 : %s"),
     RENT_PERIOD("임대 기간 : %s ~ %s"),
-    RENT_PRICE("임대 비용 : %d만원"),
+    RENT_PRICE("임대 비용 : %d원"),
     CONFIRM_RENT("임대 신청 하시겠습니까? (1. 예 / 2. 아니오)"),
     RENT_END("임대 신청이 완료되었습니다."),
     SHOW_HOLD_RENT_HISTORY("\n===========대기중인 임대 신청 목록============="),
