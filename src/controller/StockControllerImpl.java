@@ -28,7 +28,7 @@ public class StockControllerImpl implements StockController {
                         , stock.getTotal_price(), stock.getSector_id(), stock.getWarehouse_id(), stock.getWarehouse_id());
             });
         }
-    }
+    } 
 
 
     public void printAdminUserStock(String admin_id) {
