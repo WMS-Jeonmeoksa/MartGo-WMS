@@ -70,7 +70,7 @@ public class UserControllerImpl implements UserController {
             System.out.println(USER_CUSTOMER_OUTGOING.getMessage());
             System.out.println(USER_CUSTOMER_INCOMING.getMessage());
             System.out.println(USER_CUSTOMER_STOCK.getMessage());
-            System.out.println(USER_LOG_OUT.getMessage());
+            System.out.println(USER_LOG_OUT_6.getMessage());
             System.out.print(MAIN_CHOICE.getMessage());
 
             int choice = Integer.parseInt(scan.nextLine());

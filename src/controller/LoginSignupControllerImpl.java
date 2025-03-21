@@ -21,7 +21,6 @@ public class LoginSignupControllerImpl implements LoginSignupController {
     public void start() {
         while (true) {
             System.out.println(MAIN_MENU.getMessage());
-            System.out.println(MAIN_NOW_STATUS.getMessage());
             System.out.println(MAIN_LOGIN.getMessage());
             System.out.println(MAIN_SIGNUP.getMessage());
             System.out.println(MAIN_EXIT.getMessage());
@@ -30,15 +29,12 @@ public class LoginSignupControllerImpl implements LoginSignupController {
 
             switch (choice) {
                 case 1:
-                    memberController.checkCurrentLogin();
-                    break;
-                case 2:
                     login();
                     break;
-                case 3:
+                case 2:
                     signUp();
                     break;
-                case 4:
+                case 3:
                     System.out.println(MAIN_EXIT_MENU.getMessage());
                     return;
                 default:
