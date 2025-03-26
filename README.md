@@ -57,5 +57,8 @@ java -jar target/MartGO.jar
  ┃ ┣ 📂 view
  ┗ 📜 README.md
 ```
+## 프로젝트 기록물
+https://www.notion.so/1-1b479777a02f8048b247d3ce2fae43e1?pvs=4
+
 ## 📜 라이선스
 이 프로젝트는 신세계 I&C 6차수 3팀 전먹사에 의해 완성되었습니다.
